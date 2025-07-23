@@ -27,7 +27,7 @@ namespace MasterController
             }
         }
 
-        private void SaveSlaves()
+        public void SaveSlaves()
         {
             try
             {

@@ -30,6 +30,8 @@
         {
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             checkBox1 = new System.Windows.Forms.CheckBox();
+            lbl_BladeName = new System.Windows.Forms.Label();
+            lbl_bladeNetStat = new System.Windows.Forms.Label();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -41,6 +43,8 @@
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 161F));
             tableLayoutPanel1.Controls.Add(checkBox1, 0, 0);
+            tableLayoutPanel1.Controls.Add(lbl_BladeName, 1, 0);
+            tableLayoutPanel1.Controls.Add(lbl_bladeNetStat, 2, 0);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -60,6 +64,30 @@
             checkBox1.TabIndex = 0;
             checkBox1.UseVisualStyleBackColor = true;
             // 
+            // lbl_BladeName
+            // 
+            lbl_BladeName.AutoSize = true;
+            lbl_BladeName.Dock = System.Windows.Forms.DockStyle.Fill;
+            lbl_BladeName.ForeColor = System.Drawing.Color.White;
+            lbl_BladeName.Location = new System.Drawing.Point(24, 0);
+            lbl_BladeName.Name = "lbl_BladeName";
+            lbl_BladeName.Size = new System.Drawing.Size(65, 28);
+            lbl_BladeName.TabIndex = 1;
+            lbl_BladeName.Text = "Name";
+            lbl_BladeName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_bladeNetStat
+            // 
+            lbl_bladeNetStat.AutoSize = true;
+            lbl_bladeNetStat.Dock = System.Windows.Forms.DockStyle.Fill;
+            lbl_bladeNetStat.ForeColor = System.Drawing.Color.White;
+            lbl_bladeNetStat.Location = new System.Drawing.Point(95, 0);
+            lbl_bladeNetStat.Name = "lbl_bladeNetStat";
+            lbl_bladeNetStat.Size = new System.Drawing.Size(85, 28);
+            lbl_bladeNetStat.TabIndex = 2;
+            lbl_bladeNetStat.Text = "Status";
+            lbl_bladeNetStat.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // SlaveWidgetStatus
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -77,5 +105,7 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label lbl_BladeName;
+        private System.Windows.Forms.Label lbl_bladeNetStat;
     }
 }

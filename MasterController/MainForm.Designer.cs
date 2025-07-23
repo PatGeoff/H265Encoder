@@ -30,7 +30,7 @@ namespace MasterController
             button8 = new System.Windows.Forms.Button();
             label3 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
-            flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            FLP_SlaveStatus = new System.Windows.Forms.FlowLayoutPanel();
             tabPage_Concat = new System.Windows.Forms.TabPage();
             flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             tabPage_Réglages = new System.Windows.Forms.TabPage();
@@ -203,7 +203,7 @@ namespace MasterController
             // 
             tabPage_Encode.BackColor = System.Drawing.Color.FromArgb(40, 40, 40);
             tabPage_Encode.Controls.Add(flowLayoutPanel3);
-            tabPage_Encode.Controls.Add(flowLayoutPanel1);
+            tabPage_Encode.Controls.Add(FLP_SlaveStatus);
             tabPage_Encode.Location = new System.Drawing.Point(4, 5);
             tabPage_Encode.Name = "tabPage_Encode";
             tabPage_Encode.Padding = new System.Windows.Forms.Padding(3);
@@ -273,13 +273,13 @@ namespace MasterController
             label4.Text = "label4";
             label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // flowLayoutPanel1
+            // FLP_SlaveStatus
             // 
-            flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            flowLayoutPanel1.Location = new System.Drawing.Point(6, 348);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new System.Drawing.Size(228, 169);
-            flowLayoutPanel1.TabIndex = 0;
+            FLP_SlaveStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            FLP_SlaveStatus.Location = new System.Drawing.Point(6, 165);
+            FLP_SlaveStatus.Name = "FLP_SlaveStatus";
+            FLP_SlaveStatus.Size = new System.Drawing.Size(447, 169);
+            FLP_SlaveStatus.TabIndex = 0;
             // 
             // tabPage_Concat
             // 
@@ -488,7 +488,7 @@ namespace MasterController
         private System.Windows.Forms.TabPage tabPage_Encode;
         private System.Windows.Forms.TabPage tabPage_Concat;
         private System.Windows.Forms.TabPage tabPage_Réglages;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel FLP_SlaveStatus;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button4;

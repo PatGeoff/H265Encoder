@@ -12,29 +12,45 @@ namespace MasterController
 {
     public partial class SlaveWidgetStatus : UserControl
     {
+        public event EventHandler DeleteRequested;
         private SlaveConfig _slave;
-        public SlaveWidgetStatus()
+
+        public SlaveWidgetStatus(SlaveConfig slave)
         {
             InitializeComponent();
-        }
-
-
-        public void BindToSlave(SlaveConfig slave)
-        {
             _slave = slave;
-            UpdateDisplay();
+            _slave.PropertyChanged += Config_PropertyChanged;
+            this.AutoSize = false;
+            this.Dock = DockStyle.None;
         }
+
+
+        private void Config_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            // Update only the relevant part of the UI
+            if (e.PropertyName == nameof(SlaveConfig.NetworkStatus) || e.PropertyName == nameof(SlaveConfig.Utiliser))
+            {
+                UpdateDisplay();
+            }
+        }
+
 
         public void UpdateDisplay()
         {
-            //lbl_bladeName.Text = _slave.Name;
-            //lbl_IpPort.Text = $"{_slave.Ip}:{_slave.Port}";
-            //lbl_bladeNetStat.Text = _slave.Connected ? "Online" : "Offline";
-            //lbl_bladeNetStat.ForeColor = _slave.Connected ? Color.Green : Color.Red;
+            lbl_BladeName.Text = _slave.Name;
+            lbl_bladeNetStat.Text = _slave.NetworkStatus ? "Online" : "Offline";
+            lbl_bladeNetStat.ForeColor = _slave.NetworkStatus ? Color.Green : Color.Red;
         }
 
-        public SlaveConfig GetSlave() => _slave;
 
+
+
+
+        private void btn_deleteBlade_Click(object sender, EventArgs e)
+        {
+            this.Parent?.Controls.Remove(this);
+            DeleteRequested?.Invoke(this, EventArgs.Empty);
+        }
 
     }
 }

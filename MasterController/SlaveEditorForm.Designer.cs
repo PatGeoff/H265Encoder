@@ -61,13 +61,17 @@ namespace MasterController
             // SlaveEditorForm
             // 
             BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
-            ClientSize = new System.Drawing.Size(284, 134);
+            ClientSize = new System.Drawing.Size(331, 154);
             Controls.Add(textBoxName);
             Controls.Add(textBoxIp);
             Controls.Add(textBoxPort);
             Controls.Add(buttonOK);
             Name = "SlaveEditorForm";
             Text = "Add/Edit Slave";
+            Controls.SetChildIndex(buttonOK, 0);
+            Controls.SetChildIndex(textBoxPort, 0);
+            Controls.SetChildIndex(textBoxIp, 0);
+            Controls.SetChildIndex(textBoxName, 0);
             ResumeLayout(false);
             PerformLayout();
         }

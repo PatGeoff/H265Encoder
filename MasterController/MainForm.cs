@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MasterController
@@ -13,6 +15,7 @@ namespace MasterController
     {
         private List<SlaveConfig> slaves = new();
         private Dictionary<string, SlaveWidget> widgetMap = new();
+        private Dictionary<string, SlaveWidgetStatus> widgetStatusMap = new();
         private Timer refreshTimer;
 
         public MainForm()
@@ -24,59 +27,72 @@ namespace MasterController
         }
 
 
-
         private void InitializeWidgets()
         {
             flowLayoutPanel_SlaveList.Controls.Clear();
-            widgetMap.Clear();
-
+            FLP_SlaveStatus.Controls.Clear();
             foreach (var slave in slaves.OrderBy(s => s.Name))
             {
-                var widget = new SlaveWidget
-                {
-                    BladeName = slave.Name,
-                    IpPort = $"{slave.Ip}:{slave.Port}",
-                    NetworkStatus = slave.Connected ? "Online" : "Offline"
 
-                };
-
-
-
+                var widget = new SlaveWidget(slave);
+                widget.WidgetActionTriggered += Widget_Deleted;
                 widget.DeleteRequested += (s, e) =>
                {
                    flowLayoutPanel_SlaveList.Controls.Remove(widget);
-                   slaves.RemoveAll(sl => sl.Name == widget.BladeName);
+                   slaves.RemoveAll(sl => sl.Name == slave.Name);
                    SaveSlaves();
                };
-
+                
                 widgetMap[slave.Name] = widget;
                 flowLayoutPanel_SlaveList.Controls.Add(widget);
             }
+            foreach (var slave in slaves.OrderBy(s => s.Name))
+            {
+                var widget = new SlaveWidgetStatus(slave);
+                widget.DeleteRequested += (s, e) =>
+                {
+                    flowLayoutPanel_SlaveList.Controls.Remove(widget);
+                    slaves.RemoveAll(sl => sl.Name == slave.Name);                    
+                    SaveSlaves();
+                };
+                
+                widgetStatusMap[slave.Name] = widget;
+                FLP_SlaveStatus.Controls.Add(widget);
+            }
+            Task.Run(() => RefreshSlaveStatusesAsync());
+
+
+        }
+
+        private void Widget_Deleted(object sender, EventArgs e)
+        {
+            //InitializeWidgets();
         }
 
         private void StartRefreshTimer()
         {
-            refreshTimer = new Timer { Interval = 5000 }; // 5 secondes
-            refreshTimer.Tick += (s, e) => RefreshSlaveStatuses();
+            refreshTimer = new Timer { Interval = 5000 }; // 5 seconds
+            refreshTimer.Tick += async (s, e) => await RefreshSlaveStatusesAsync();
             refreshTimer.Start();
         }
 
-        private void RefreshSlaveStatuses()
+        private async Task RefreshSlaveStatusesAsync()
         {
-            foreach (var slave in slaves)
+            var tasks = slaves.Select(async slave =>
             {
-                bool online = IsSocketConnected(slave.Ip, slave.Port);
+                bool online = await Task.Run(() => IsSocketConnected(slave.Ip, slave.Port));
                 slave.NetworkStatus = online;
-                               
+            });
 
-            }
+            await Task.WhenAll(tasks);
+
             foreach (SlaveWidget widget in flowLayoutPanel_SlaveList.Controls)
             {
-               
-                    widget.UpdateDisplay(); // uses the bound SlaveConfig
-               
+                widget.UpdateDisplay(); // uses the bound SlaveConfig
             }
         }
+
+
 
         private bool IsSocketConnected(string ip, int port)
         {
@@ -104,6 +120,9 @@ namespace MasterController
             }
         }
 
+       
+
+
         private void btn_SendMessage_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
@@ -130,24 +149,61 @@ namespace MasterController
 
         private void btn_RefreshPing_Click(object sender, EventArgs e)
         {
-            RefreshSlaveStatuses();
+            Task.Run(() => RefreshSlaveStatusesAsync());
+
         }
 
         private void button1_Click(object sender, EventArgs e) => borderlessTabControl1.SelectedIndex = 0;
-        private void button2_Click(object sender, EventArgs e) => borderlessTabControl1.SelectedIndex = 1;
-        private void button3_Click(object sender, EventArgs e) => borderlessTabControl1.SelectedIndex = 2;
 
+        private void button2_Click(object sender, EventArgs e) => borderlessTabControl1.SelectedIndex = 1;
+
+        private void button3_Click(object sender, EventArgs e) => borderlessTabControl1.SelectedIndex = 2;
 
     }
 
-    public class SlaveConfig
+
+public class SlaveConfig : INotifyPropertyChanged  // Mes deux widgets (SlaveWidgetStatus et SlaveWidget) sont liés à un objet qui les notifient quand la valeur de NetworkStatus et Utiliser change.
     {
+        public event PropertyChangedEventHandler PropertyChanged; 
+
         public string Name { get; set; }
         public string Ip { get; set; }
         public int Port { get; set; }
-        public bool NetworkStatus { get; set; }
-        public bool Utiliser { get; set; }
-    }
+
+        private bool _networkStatus;
+        public bool NetworkStatus
+        {
+            get => _networkStatus;
+            set
+            {
+                if (_networkStatus != value)
+                {
+                    _networkStatus = value;
+                    OnPropertyChanged(nameof(NetworkStatus));
+                }
+            }
+        }
+
+        private bool _utiliser;
+        public bool Utiliser
+        {
+            get => _utiliser;
+            set
+            {
+                if (_utiliser != value)
+                {
+                    _utiliser = value;
+                    OnPropertyChanged(nameof(Utiliser));
+                }
+            }
+        }
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }  
+
 
     public class BorderlessTabControl : TabControl
     {

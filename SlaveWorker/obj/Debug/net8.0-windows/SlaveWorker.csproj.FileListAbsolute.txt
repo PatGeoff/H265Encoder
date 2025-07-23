@@ -28,3 +28,4 @@ C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Debug\net8.0-wi
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Debug\net8.0-windows\ref\SlaveWorker.dll
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Debug\net8.0-windows\SlaveWorker.MainForm.resources
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Debug\net8.0-windows\SlaveWorker.csproj.GenerateResource.cache
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Debug\net8.0-windows\SlaveWorker.sourcelink.json
