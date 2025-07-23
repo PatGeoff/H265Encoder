@@ -1,0 +1,44 @@
+[
+  {
+    "Name": "Blade 01",
+    "Ip": "192.0168.100.101",
+    "Port": 9000,
+    "Connected": false
+  },
+  {
+    "Name": "Blade 02",
+    "Ip": "192.168.100.102",
+    "Port": 9000,
+    "Connected": false
+  },
+  {
+    "Name": "Blade 06",
+    "Ip": "192.168.100.106",
+    "Port": 9000,
+    "Connected": true
+  },
+  {
+    "Name": "Blade 07",
+    "Ip": "192.168.100.107",
+    "Port": 9000,
+    "Connected": false
+  },
+  {
+    "Name": "Blade 05",
+    "Ip": "192.168.100.105",
+    "Port": 9000,
+    "Connected": false
+  },
+  {
+    "Name": "Blade 08",
+    "Ip": "192.168.100.108",
+    "Port": 9000,
+    "Connected": false
+  },
+  {
+    "Name": "Blade 09",
+    "Ip": "192.168.100.109",
+    "Port": 9000,
+    "Connected": false
+  }
+]

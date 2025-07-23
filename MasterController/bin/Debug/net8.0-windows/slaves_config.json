@@ -1,0 +1,30 @@
+[
+  {
+    "Name": "Blade 6",
+    "Ip": "192.168.100.106",
+    "Port": 9000,
+    "Connected": true,
+    "utiliser": false
+  },
+  {
+    "Name": "Blade 2",
+    "Ip": "192.168.100.102",
+    "Port": 9000,
+    "Connected": false,
+    "utiliser": false
+  },
+  {
+    "Name": "Windows",
+    "Ip": "192.168.100.196",
+    "Port": 9000,
+    "Connected": true,
+    "utiliser": false
+  },
+  {
+    "Name": "Local",
+    "Ip": "127.0.0.1",
+    "Port": 9000,
+    "Connected": false,
+    "utiliser": false
+  }
+]
