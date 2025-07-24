@@ -46,6 +46,7 @@ namespace MasterController
             textBoxPort.PlaceholderText = "Port";
             textBoxPort.Size = new System.Drawing.Size(260, 23);
             textBoxPort.TabIndex = 2;
+            textBoxPort.Text = "9000";
             // 
             // buttonOK
             // 
@@ -68,10 +69,6 @@ namespace MasterController
             Controls.Add(buttonOK);
             Name = "SlaveEditorForm";
             Text = "Add/Edit Slave";
-            Controls.SetChildIndex(buttonOK, 0);
-            Controls.SetChildIndex(textBoxPort, 0);
-            Controls.SetChildIndex(textBoxIp, 0);
-            Controls.SetChildIndex(textBoxName, 0);
             ResumeLayout(false);
             PerformLayout();
         }

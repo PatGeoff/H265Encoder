@@ -22,6 +22,8 @@ namespace MasterController
             _slave.PropertyChanged += Config_PropertyChanged;
             this.AutoSize = false;
             this.Dock = DockStyle.None;
+            this.Name = slave.Name;
+            UpdateDisplay();
         }
 
 
@@ -34,6 +36,12 @@ namespace MasterController
             }
         }
 
+        public bool UtiliserChecked
+        {
+            get => checkBox_Utiliser.Checked;
+            set => checkBox_Utiliser.Checked = value;
+        }
+
 
         public void UpdateDisplay()
         {
@@ -43,14 +51,25 @@ namespace MasterController
         }
 
 
-
-
-
         private void btn_deleteBlade_Click(object sender, EventArgs e)
         {
             this.Parent?.Controls.Remove(this);
             DeleteRequested?.Invoke(this, EventArgs.Empty);
         }
 
+        private void checkBox_Utiliser_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_slave.NetworkStatus)
+            {
+                _slave.Utiliser = checkBox_Utiliser.Checked;
+            }
+            else
+            {
+                checkBox_Utiliser.Checked = false;
+            }
+           
+        }
+
+       
     }
 }

@@ -24,6 +24,7 @@ namespace MasterController
             _slave.PropertyChanged += Config_PropertyChanged;
             this.AutoSize = false;
             this.Dock = DockStyle.None;
+            this.Name = slave.Name;
         }
 
 
@@ -51,7 +52,7 @@ namespace MasterController
         {
             this.Parent?.Controls.Remove(this);
             DeleteRequested?.Invoke(this, EventArgs.Empty);
-            WidgetActionTriggered?.Invoke(this, EventArgs.Empty); // pour pouvoir exécuter SaveSlaves() dans MainForm. 
+            WidgetActionTriggered?.Invoke(this, EventArgs.Empty); 
         }
     }
 }

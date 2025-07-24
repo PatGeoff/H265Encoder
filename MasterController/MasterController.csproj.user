@@ -20,6 +20,9 @@
     <Compile Update="SlaveEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="SlaveSpreadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="SlaveWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>

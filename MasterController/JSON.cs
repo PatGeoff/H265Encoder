@@ -38,6 +38,7 @@ namespace MasterController
             {
                 MessageBox.Show("Error saving slave config: " + ex.Message);
             }
-        }
+        }             
+
     }
 }

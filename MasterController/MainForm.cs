@@ -5,15 +5,23 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace MasterController
 {
     public partial class MainForm : Form
     {
         private List<SlaveConfig> slaves = new();
+        private string configPath = "config.json";
+
+        private AppSettings settings;
+
         private Dictionary<string, SlaveWidget> widgetMap = new();
         private Dictionary<string, SlaveWidgetStatus> widgetStatusMap = new();
         private Timer refreshTimer;
@@ -21,6 +29,8 @@ namespace MasterController
         public MainForm()
         {
             InitializeComponent();
+            settings = new AppSettings(configPath);
+            LoadSettings();
             LoadSlaves();
             InitializeWidgets();
             StartRefreshTimer();
@@ -30,7 +40,7 @@ namespace MasterController
         private void InitializeWidgets()
         {
             flowLayoutPanel_SlaveList.Controls.Clear();
-            FLP_SlaveStatus.Controls.Clear();
+            flowLayoutPanel_SlaveStatus.Controls.Clear();
             foreach (var slave in slaves.OrderBy(s => s.Name))
             {
 
@@ -42,31 +52,57 @@ namespace MasterController
                    slaves.RemoveAll(sl => sl.Name == slave.Name);
                    SaveSlaves();
                };
-                
+
                 widgetMap[slave.Name] = widget;
                 flowLayoutPanel_SlaveList.Controls.Add(widget);
             }
             foreach (var slave in slaves.OrderBy(s => s.Name))
             {
                 var widget = new SlaveWidgetStatus(slave);
-                widget.DeleteRequested += (s, e) =>
-                {
-                    flowLayoutPanel_SlaveList.Controls.Remove(widget);
-                    slaves.RemoveAll(sl => sl.Name == slave.Name);                    
-                    SaveSlaves();
-                };
-                
-                widgetStatusMap[slave.Name] = widget;
-                FLP_SlaveStatus.Controls.Add(widget);
+                flowLayoutPanel_SlaveStatus.Controls.Add(widget);
             }
             Task.Run(() => RefreshSlaveStatusesAsync());
+            foreach (var slave in slaves)
+            {
+                slave.Utiliser = slave.NetworkStatus;
+                var name = slave.Name;
 
+                var controlToUpdate = flowLayoutPanel_SlaveStatus.Controls
+                    .OfType<SlaveWidgetStatus>()
+                    .FirstOrDefault(c => c.Name == name);
+
+                if (controlToUpdate != null)
+                {
+                    controlToUpdate.UtiliserChecked = slave.Utiliser;
+                }
+            }
 
         }
 
         private void Widget_Deleted(object sender, EventArgs e)
         {
-            //InitializeWidgets();
+
+            if (sender is SlaveWidget widget)
+            {
+                var name = widget.Name;
+
+                // Find the matching control in flowLayoutPanel_SlaveStatus
+                var controlToRemove = flowLayoutPanel_SlaveStatus.Controls
+                    .OfType<Control>()
+                    .FirstOrDefault(c => c.Name == name);
+
+                if (controlToRemove != null)
+                {
+                    flowLayoutPanel_SlaveStatus.Controls.Remove(controlToRemove);
+                    controlToRemove.Dispose(); // Optional: free resources
+                }
+                else
+                {
+                    MessageBox.Show("aucun Control avec le nom " + name);
+                }
+
+            }
+
         }
 
         private void StartRefreshTimer()
@@ -91,8 +127,6 @@ namespace MasterController
                 widget.UpdateDisplay(); // uses the bound SlaveConfig
             }
         }
-
-
 
         private bool IsSocketConnected(string ip, int port)
         {
@@ -120,32 +154,37 @@ namespace MasterController
             }
         }
 
-       
+        private async void btn_SendMessage_Click(object sender, EventArgs e)
+        {
+            await SendMessageAsync();
+        }
 
-
-        private void btn_SendMessage_Click(object sender, EventArgs e)
+        private async Task SendMessageAsync()
         {
             listBox1.Items.Clear();
             string message = textBox_messageToSend.Text;
-            byte[] data = System.Text.Encoding.UTF8.GetBytes(message);
+            byte[] data = Encoding.UTF8.GetBytes(message);
 
-            foreach (var slave in slaves)
+            var tasks = slaves.Select(async slave =>
             {
                 try
                 {
                     using TcpClient client = new();
-                    client.Connect(slave.Ip, slave.Port);
+                    await client.ConnectAsync(slave.Ip, slave.Port);
                     using NetworkStream stream = client.GetStream();
-                    stream.Write(data, 0, data.Length);
+                    await stream.WriteAsync(data, 0, data.Length);
 
-                    listBox1.Items.Add($"Message envoyé à {slave.Ip}:{slave.Port}");
+                    Invoke(() => listBox1.Items.Add($"Message envoyé à {slave.Ip}:{slave.Port}"));
                 }
                 catch (Exception ex)
                 {
-                    listBox1.Items.Add($"Échec d'envoi à {slave.Name} ({slave.Ip}:{slave.Port}): {ex.Message}");
+                    Invoke(() => listBox1.Items.Add($"Échec d'envoi à {slave.Name} ({slave.Ip}:{slave.Port}): {ex.Message}"));
                 }
-            }
+            });
+
+            await Task.WhenAll(tasks);
         }
+
 
         private void btn_RefreshPing_Click(object sender, EventArgs e)
         {
@@ -159,10 +198,193 @@ namespace MasterController
 
         private void button3_Click(object sender, EventArgs e) => borderlessTabControl1.SelectedIndex = 2;
 
+        private async void btn_LoadSourceImages_Click(object sender, EventArgs e)
+        {
+
+            using OpenFileDialog openFileDialog = new();
+            openFileDialog.Title = "Sélectionner une image";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fullPath = openFileDialog.FileName;
+                string folderPath = Path.GetDirectoryName(fullPath);
+                string fileName = Path.GetFileName(fullPath);
+
+                settings.SourceImagePath = folderPath;
+                settings.ImageName = fileName;
+
+                lbl_SourceImagePath.Text = folderPath;
+                settings.Save();
+                label_NbrImages.Text = "Calcul en cours";
+                Task.Run(async () => await CalculateImageNumber(folderPath, fileName));
+
+            }
+
+        }
+
+        private async Task CalculateImageNumber(string folderPath, string fileName)
+        {
+
+
+            int count = await Task.Run(() =>
+            {
+                var match = Regex.Match(fileName, @"^(.*?)[._]\d+\.(\w+)$");
+
+                if (match.Success)
+                {
+                    string baseName = match.Groups[1].Value;
+                    string extension = match.Groups[2].Value;
+
+                    string pattern = $@"^{Regex.Escape(baseName)}[._]\d+\.{Regex.Escape(extension)}$";
+
+                    return Directory.GetFiles(folderPath)
+                        .Count(f => Regex.IsMatch(Path.GetFileName(f), pattern, RegexOptions.IgnoreCase));
+                }
+                else
+                {
+                    return -1;
+                }
+            });
+
+            // Mise à jour UI sur le thread principal
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    UpdateUI(count);
+                }));
+            }
+            else
+            {
+                UpdateUI(count);
+            }
+        }
+
+        private void UpdateUI(int count)
+        {
+            if (count >= 0)
+            {
+                label_NbrImages.Text = $"Found {count} matching image(s).";
+            }
+            else
+            {
+                label_NbrImages.Text = "Filename does not match the expected pattern.";
+            }
+        }
+
+
+        private void btn_ChooseDestination_Click(object sender, EventArgs e)
+        {
+
+            using FolderBrowserDialog folderDialog = new();
+            folderDialog.Description = "Sélectionner un dossier";
+
+            if (folderDialog.ShowDialog() == DialogResult.OK)
+            {
+                settings.DestinationPath = folderDialog.SelectedPath;
+
+                settings.Save();
+                lbl_DestinationPath.Text = folderDialog.SelectedPath;
+            }
+
+        }
+
+
+
+        public AppSettings LoadSettings()
+        {
+            settings.Load();
+
+            if (settings != null)
+            {
+                if (!string.IsNullOrEmpty(settings.SourceImagePath))
+                    lbl_SourceImagePath.Text = settings.SourceImagePath;
+
+                if (!string.IsNullOrEmpty(settings.DestinationPath))
+                    lbl_DestinationPath.Text = settings.DestinationPath;
+
+                if (!string.IsNullOrEmpty(settings.FFMPEGPath))
+                    lbl_FFMPEGPath.Text = settings.FFMPEGPath;
+            }
+
+            return settings;
+        }
+
+        private void btn_FFMPEGPath_Click(object sender, EventArgs e)
+        {
+
+            using OpenFileDialog openFileDialog = new();
+            openFileDialog.Title = "Sélectionner le fichier FFMPEG";
+            openFileDialog.Filter = "Executable Files|*.exe|All Files|*.*";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string ffmpegPath = openFileDialog.FileName;
+                settings.FFMPEGPath = ffmpegPath;
+                lbl_FFMPEGPath.Text = ffmpegPath;
+                settings.Save();
+            }
+
+        }
+
+        private void tabPage_Encode_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_AutoAssign_Click(object sender, EventArgs e)
+        {
+
+            var slaveForm = new SlaveSpreadForm(slaves);
+            slaveForm.Show();
+
+        }
+    }
+
+    public class AppSettings
+    {
+        [JsonIgnore]
+        private string _filePath;
+
+        public AppSettings()
+        {
+
+        }
+
+        public AppSettings(string filepath)
+        {
+            _filePath = filepath;
+        }
+
+        public string DestinationPath { get; set; }
+        public string SourceImagePath { get; set; }
+        public string ImageName { get; set; }
+        public string FFMPEGPath { get; set; }
+
+        public void Save()
+        {
+            string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(_filePath, json);
+        }
+
+        public void Load()
+        {
+            string json = File.ReadAllText(_filePath);
+            var loaded = JsonSerializer.Deserialize<AppSettings>(json);
+
+            if (loaded != null)
+            {
+                DestinationPath = loaded.DestinationPath;
+                SourceImagePath = loaded.SourceImagePath;
+                ImageName = loaded.ImageName;
+                FFMPEGPath = loaded.FFMPEGPath;
+            }
+        }
+
     }
 
 
-public class SlaveConfig : INotifyPropertyChanged  // Mes deux widgets (SlaveWidgetStatus et SlaveWidget) sont liés à un objet qui les notifient quand la valeur de NetworkStatus et Utiliser change.
+    public class SlaveConfig : INotifyPropertyChanged  // Mes deux widgets (SlaveWidgetStatus et SlaveWidget) sont liés à un objet qui les notifient quand la valeur de NetworkStatus et Utiliser change.
     {
         public event PropertyChangedEventHandler PropertyChanged; 
 
@@ -203,6 +425,8 @@ public class SlaveConfig : INotifyPropertyChanged  // Mes deux widgets (SlaveWid
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }  
+
+
 
 
     public class BorderlessTabControl : TabControl
