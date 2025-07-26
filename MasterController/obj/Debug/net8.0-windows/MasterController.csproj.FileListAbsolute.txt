@@ -38,4 +38,4 @@ C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8
 C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.pdb
 C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.genruntimeconfig.cache
 C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\ref\MasterController.dll
-C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.SlaveSpreadForm.resources
+C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.FFMPEGEditor.resources

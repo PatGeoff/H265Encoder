@@ -18,8 +18,9 @@ namespace MasterController
                 if (File.Exists("slaves_config.json"))
                 {
                     string json = File.ReadAllText("slaves_config.json");
-                    slaves = JsonSerializer.Deserialize<List<SlaveConfig>>(json);
+                    slaves = JsonSerializer.Deserialize<List<SlaveConfig>>(json);                    
                 }
+                
             }
             catch (Exception ex)
             {

@@ -1,6 +1,9 @@
 {
-  "DestinationPath": "C:\\Mac\\Home\\Documents\\A jeter\\Aerolithe",
-  "SourceImagePath": "\\\\FREENASPOLARIS\\PolarisTech\\Asteroid\\Images Source\\Asteroide_FramesOriginaux",
-  "ImageName": "Asteroid_Mission_Extreme_4K_60fps_Mono_65846.png",
-  "FFMPEGPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\ffmpeg.exe"
+  "DestinationPath": "C:\\Mac\\Home\\Desktop",
+  "DestinationName": "rien.mp4",
+  "SourceImagePath": "\\\\FREENASPOLARIS\\PolarisTech\\Asteroid\\Images Source\\Asteroide_VersionCourte_Fr_4K_60fps",
+  "ImageName": "Asteroide_VersionCourte_Eng_%08d.jpg",
+  "FFMPEGPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\ffmpeg.exe",
+  "FFMPEGPresetsPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\ffmpegpresets",
+  "FFMPEGPreset": "Base"
 }

@@ -4,20 +4,23 @@
     "Ip": "192.168.100.106",
     "Port": 9000,
     "NetworkStatus": true,
-    "Utiliser": true
+    "Utiliser": true,
+    "FFMPEGCommand": null
   },
   {
     "Name": "Windows",
     "Ip": "192.168.100.196",
     "Port": 9000,
     "NetworkStatus": false,
-    "Utiliser": false
+    "Utiliser": false,
+    "FFMPEGCommand": null
   },
   {
     "Name": "Local",
     "Ip": "127.0.0.1",
     "Port": 9000,
     "NetworkStatus": false,
-    "Utiliser": false
+    "Utiliser": false,
+    "FFMPEGCommand": null
   }
 ]

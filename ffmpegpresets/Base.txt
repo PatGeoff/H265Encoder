@@ -1,0 +1,1 @@
+start /affinity FFFFFFFFFFFFFFFF "FFmpeg" "CheminVersFFMPEG" -hide_banner -r 60 -i "CheminVersImages" -b:v 100M -maxrate 100M -minrate 100M -bufsize 100M -vf scale=5948:5948 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params "pools=2:frame-threads=16:wpp=1" -y "CheminVersOutput"

@@ -12,13 +12,15 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace MasterController
 {
     public partial class MainForm : Form
     {
-        private List<SlaveConfig> slaves = new();
+        public static List<SlaveConfig> slaves = new();
         private string configPath = "config.json";
+        public string ffmpegCommmand;
 
         private AppSettings settings;
 
@@ -32,6 +34,7 @@ namespace MasterController
             settings = new AppSettings(configPath);
             LoadSettings();
             LoadSlaves();
+            LoadFFPresets();
             InitializeWidgets();
             StartRefreshTimer();
         }
@@ -58,24 +61,12 @@ namespace MasterController
             }
             foreach (var slave in slaves.OrderBy(s => s.Name))
             {
-                var widget = new SlaveWidgetStatus(slave);
+                var widget = new SlaveWidgetStatus(slave, settings);
                 flowLayoutPanel_SlaveStatus.Controls.Add(widget);
             }
             Task.Run(() => RefreshSlaveStatusesAsync());
-            foreach (var slave in slaves)
-            {
-                slave.Utiliser = slave.NetworkStatus;
-                var name = slave.Name;
+           
 
-                var controlToUpdate = flowLayoutPanel_SlaveStatus.Controls
-                    .OfType<SlaveWidgetStatus>()
-                    .FirstOrDefault(c => c.Name == name);
-
-                if (controlToUpdate != null)
-                {
-                    controlToUpdate.UtiliserChecked = slave.Utiliser;
-                }
-            }
 
         }
 
@@ -126,6 +117,24 @@ namespace MasterController
             {
                 widget.UpdateDisplay(); // uses the bound SlaveConfig
             }
+            foreach (var slave in slaves)
+            {
+
+                slave.Utiliser = slave.NetworkStatus;
+                var name = slave.Name;
+
+                var controlToUpdate = flowLayoutPanel_SlaveStatus.Controls
+                    .OfType<SlaveWidgetStatus>()
+                    .FirstOrDefault(c => c.Name == name);
+
+                if (controlToUpdate != null)
+                {
+                    controlToUpdate.UtiliserChecked = slave.Utiliser;
+
+                }
+            }
+            var selectedBlades = slaves.OrderBy(s => s.Name).Where(blade => blade.Utiliser).ToList();
+            textBox_autoSplitNbr.Text = selectedBlades.Count.ToString();
         }
 
         private bool IsSocketConnected(string ip, int port)
@@ -159,7 +168,7 @@ namespace MasterController
             await SendMessageAsync();
         }
 
-        private async Task SendMessageAsync()
+        public async Task SendMessageAsync()
         {
             listBox1.Items.Clear();
             string message = textBox_messageToSend.Text;
@@ -185,18 +194,54 @@ namespace MasterController
             await Task.WhenAll(tasks);
         }
 
-
         private void btn_RefreshPing_Click(object sender, EventArgs e)
         {
             Task.Run(() => RefreshSlaveStatusesAsync());
 
         }
 
-        private void button1_Click(object sender, EventArgs e) => borderlessTabControl1.SelectedIndex = 0;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            borderlessTabControl1.SelectedIndex = 0;
+            radioButtons();
+        }
 
-        private void button2_Click(object sender, EventArgs e) => borderlessTabControl1.SelectedIndex = 1;
+        private void button2_Click(object sender, EventArgs e)
+        {
+            borderlessTabControl1.SelectedIndex = 1;
+            radioButtons();
+        }
 
-        private void button3_Click(object sender, EventArgs e) => borderlessTabControl1.SelectedIndex = 2;
+        private void button3_Click(object sender, EventArgs e)
+        {
+            borderlessTabControl1.SelectedIndex = 2;
+            radioButtons();
+        }
+
+        private void radioButtons()
+        {
+            Color selectedColor = Color.FromArgb(40, 40, 40);
+            Color unselectedColor = Color.FromArgb(30, 30, 30);
+
+            switch (borderlessTabControl1.SelectedIndex)
+            {
+                case 0:
+                    button1.BackColor = selectedColor;
+                    button2.BackColor = unselectedColor;
+                    button3.BackColor = unselectedColor;
+                    break;
+                case 1:
+                    button1.BackColor = unselectedColor;
+                    button2.BackColor = selectedColor;
+                    button3.BackColor = unselectedColor;
+                    break;
+                case 2:
+                    button1.BackColor = unselectedColor;
+                    button2.BackColor = unselectedColor;
+                    button3.BackColor = selectedColor;
+                    break;
+            }
+        }
 
         private async void btn_LoadSourceImages_Click(object sender, EventArgs e)
         {
@@ -213,9 +258,30 @@ namespace MasterController
                 settings.SourceImagePath = folderPath;
                 settings.ImageName = fileName;
 
+
+                var match = Regex.Match(fileName, @"^(.*?)[._]\d+\.(\w+)$");
+                if (match.Success)
+                {
+                    string baseName = match.Groups[1].Value;
+                    string extension = match.Groups[2].Value;
+
+                    string ffmpegPattern = $"{baseName}_%08d.{extension}";
+                    settings.ImageName = ffmpegPattern;
+                    lbl_imageNameFormatted.Text = ffmpegPattern;
+                }
+                else
+                {
+                    MessageBox.Show("Le nom de fichier ne correspond pas au format attendu (ex: image_00000001.png).");
+                    return;
+                }
+
+
+
                 lbl_SourceImagePath.Text = folderPath;
+
+
                 settings.Save();
-                label_NbrImages.Text = "Calcul en cours";
+                textBox_NbrImages.Text = "Calcul en cours";
                 Task.Run(async () => await CalculateImageNumber(folderPath, fileName));
 
             }
@@ -264,32 +330,44 @@ namespace MasterController
         {
             if (count >= 0)
             {
-                label_NbrImages.Text = $"Found {count} matching image(s).";
+                textBox_NbrImages.Text = $"{count}";
             }
             else
             {
-                label_NbrImages.Text = "Filename does not match the expected pattern.";
+                textBox_NbrImages.Text = "Erreur";
             }
         }
-
 
         private void btn_ChooseDestination_Click(object sender, EventArgs e)
         {
-
             using FolderBrowserDialog folderDialog = new();
-            folderDialog.Description = "Sélectionner un dossier";
+            folderDialog.Description = "Sélectionner un dossier de destination";
 
             if (folderDialog.ShowDialog() == DialogResult.OK)
             {
-                settings.DestinationPath = folderDialog.SelectedPath;
+                string folderPath = folderDialog.SelectedPath;
 
-                settings.Save();
-                lbl_DestinationPath.Text = folderDialog.SelectedPath;
+                // Utiliser une boîte de saisie simple pour le nom du fichier
+                string fileName = Microsoft.VisualBasic.Interaction.InputBox(
+                    "Entrez le nom du fichier (sans extension) :",
+                    "Nom du fichier",
+                    "config");
+
+                if (!string.IsNullOrWhiteSpace(fileName))
+                {
+                    // Nettoyer le nom et ajouter l'extension si nécessaire
+                    fileName = Path.GetFileNameWithoutExtension(fileName);
+                    string fullFileName = fileName + ".mp4";
+
+                    // Stocker dans AppSettings
+                    settings.DestinationPath = folderPath;
+                    settings.DestinationName = fullFileName;
+                    settings.Save();
+
+                    lbl_DestinationPath.Text = Path.Combine(folderPath, fullFileName);
+                }
             }
-
         }
-
-
 
         public AppSettings LoadSettings()
         {
@@ -298,13 +376,22 @@ namespace MasterController
             if (settings != null)
             {
                 if (!string.IsNullOrEmpty(settings.SourceImagePath))
+                {
                     lbl_SourceImagePath.Text = settings.SourceImagePath;
+                }
 
                 if (!string.IsNullOrEmpty(settings.DestinationPath))
-                    lbl_DestinationPath.Text = settings.DestinationPath;
+                {
+                    if (!string.IsNullOrEmpty(settings.DestinationName))
+                    {
+                        lbl_DestinationPath.Text = settings.DestinationPath + "\\" + settings.DestinationName;
+                    }
+                    else { lbl_DestinationPath.Text = settings.DestinationPath; }
+
+                }
 
                 if (!string.IsNullOrEmpty(settings.FFMPEGPath))
-                    lbl_FFMPEGPath.Text = settings.FFMPEGPath;
+                    textBox_FFMPEGpath.Text = settings.FFMPEGPath;
             }
 
             return settings;
@@ -321,24 +408,107 @@ namespace MasterController
             {
                 string ffmpegPath = openFileDialog.FileName;
                 settings.FFMPEGPath = ffmpegPath;
-                lbl_FFMPEGPath.Text = ffmpegPath;
+                textBox_FFMPEGpath.Text = ffmpegPath;
                 settings.Save();
             }
 
         }
 
-        private void tabPage_Encode_Click(object sender, EventArgs e)
+        private void LoadFFPresets()
         {
 
+            string presetsFolder = settings.FFMPEGPresetsPath;
+            if (comboBox_ffPresets.Items.Count > 0)
+            {
+                comboBox_ffPresets.SelectedItem = settings.FFMPEGPreset;
+            }
+
+            if (Directory.Exists(presetsFolder))
+            {
+                string[] files = Directory.GetFiles(presetsFolder);
+
+                comboBox_ffPresets.Items.Clear();
+
+                foreach (string file in files)
+                {
+                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+                    comboBox_ffPresets.Items.Add(fileNameWithoutExtension);
+                }
+                lbl_ffmpegPresetPath.Text = presetsFolder;
+
+            }
+            else
+            {
+                FFMPEGSetPresetPath();
+            }
         }
 
         private void btn_AutoAssign_Click(object sender, EventArgs e)
         {
 
-            var slaveForm = new SlaveSpreadForm(slaves);
-            slaveForm.Show();
+            //var slaveForm = new SlaveSpreadForm(slaves);
+            //slaveForm.Show();
 
         }
+
+        private void btn_ffPresetsPath_Click(object sender, EventArgs e)
+        {
+            FFMPEGSetPresetPath();
+        }
+
+        private void FFMPEGSetPresetPath()
+        {
+            using FolderBrowserDialog folderDialog = new();
+            folderDialog.Description = "Sélectionner le dossier des presets FFMPEG";
+
+            if (folderDialog.ShowDialog() == DialogResult.OK)
+            {
+                settings.FFMPEGPresetsPath = folderDialog.SelectedPath;
+                settings.Save(); // Sauvegarde dans le fichier config
+                lbl_ffmpegPresetPath.Text = folderDialog.SelectedPath;
+            }
+        }
+
+        private void comboBox_ffPresets_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            settings.FFMPEGPreset = comboBox_ffPresets.SelectedItem.ToString();
+        }
+
+        private void btn_autoSplit_Click(object sender, EventArgs e)
+        {
+            if (!int.TryParse(textBox_NbrImages.Text, out int totalImages))
+            {
+                MessageBox.Show("Entrer le nombre d'images au total à splitter ou\nsélectionnez le dossier d'images pour un calcul automatique");
+                return;
+            }
+
+            var selectedBlades = slaves.OrderBy(s => s.Name).Where(blade => blade.Utiliser).ToList();
+            int bladeCount = selectedBlades.Count;
+
+            
+            if (bladeCount == 0)
+            {
+                MessageBox.Show("No blades selected.");
+                return;
+            }
+
+            int baseCount = totalImages / bladeCount;
+            int remainder = totalImages % bladeCount;
+
+            int currentStart = 0;
+
+            for (int i = 0; i < bladeCount; i++)
+            {
+                int imagesForThisBlade = baseCount + (i == bladeCount - 1 ? remainder : 0);
+                int currentEnd = currentStart + imagesForThisBlade - 1;
+
+                selectedBlades[i].StartFrame = currentStart;
+                selectedBlades[i].EndFrame = currentEnd;
+
+                currentStart = currentEnd + 1;
+            }
+        }
+
     }
 
     public class AppSettings
@@ -357,16 +527,17 @@ namespace MasterController
         }
 
         public string DestinationPath { get; set; }
+        public string DestinationName { get; set; }
         public string SourceImagePath { get; set; }
         public string ImageName { get; set; }
         public string FFMPEGPath { get; set; }
-
+        public string FFMPEGPresetsPath {  get; set; }
+        public string FFMPEGPreset {  get; set; }
         public void Save()
         {
             string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(_filePath, json);
         }
-
         public void Load()
         {
             string json = File.ReadAllText(_filePath);
@@ -376,13 +547,15 @@ namespace MasterController
             {
                 DestinationPath = loaded.DestinationPath;
                 SourceImagePath = loaded.SourceImagePath;
+                DestinationName = loaded.DestinationName;
                 ImageName = loaded.ImageName;
                 FFMPEGPath = loaded.FFMPEGPath;
+                FFMPEGPreset = loaded.FFMPEGPreset;
+                FFMPEGPresetsPath = loaded.FFMPEGPresetsPath;                
             }
         }
 
     }
-
 
     public class SlaveConfig : INotifyPropertyChanged  // Mes deux widgets (SlaveWidgetStatus et SlaveWidget) sont liés à un objet qui les notifient quand la valeur de NetworkStatus et Utiliser change.
     {
@@ -391,7 +564,8 @@ namespace MasterController
         public string Name { get; set; }
         public string Ip { get; set; }
         public int Port { get; set; }
-
+        
+       
         private bool _networkStatus;
         public bool NetworkStatus
         {
@@ -420,14 +594,56 @@ namespace MasterController
             }
         }
 
+        public int _startFrame { get; set; }
+
+        public int StartFrame
+        {
+            get => _startFrame;
+            set
+            {
+                if (_startFrame != value)
+                {
+                    _startFrame = value;
+                    OnPropertyChanged(nameof(StartFrame));
+                }
+            }
+        }
+
+        public int _endFrame { get; set; }
+        public int EndFrame
+        {
+            get => _endFrame;
+            set
+            {
+                if (_endFrame != value)
+                {
+                    _endFrame = value;
+                    OnPropertyChanged(nameof(EndFrame));
+                }
+            }
+        }
+
+        public int _frameCount { get; set; }
+        public int FrameCount
+        {
+            get => _frameCount;
+            set
+            {
+                if (_frameCount != value)
+                {
+                    _frameCount = value;
+                    OnPropertyChanged(nameof(FrameCount));
+                }
+            }
+        }
+
+        public string FFMPEGCommand { get; set; }
+
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        }      
     }  
-
-
-
 
     public class BorderlessTabControl : TabControl
     {
