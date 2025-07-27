@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -19,14 +22,18 @@ namespace MasterController
     public partial class MainForm : Form
     {
         public static List<SlaveConfig> slaves = new();
+        private List<string> ConcatList = new List<string>();
+
         private string configPath = "config.json";
         public string ffmpegCommmand;
+        private Process ffmpegProcess;
+
 
         private AppSettings settings;
 
         private Dictionary<string, SlaveWidget> widgetMap = new();
         private Dictionary<string, SlaveWidgetStatus> widgetStatusMap = new();
-        private Timer refreshTimer;
+        private System.Windows.Forms.Timer refreshTimer;
 
         public MainForm()
         {
@@ -37,6 +44,7 @@ namespace MasterController
             LoadFFPresets();
             InitializeWidgets();
             StartRefreshTimer();
+            SetDropDownMenus();
         }
 
 
@@ -63,11 +71,9 @@ namespace MasterController
             {
                 var widget = new SlaveWidgetStatus(slave, settings);
                 flowLayoutPanel_SlaveStatus.Controls.Add(widget);
+
             }
             Task.Run(() => RefreshSlaveStatusesAsync());
-           
-
-
         }
 
         private void Widget_Deleted(object sender, EventArgs e)
@@ -98,7 +104,7 @@ namespace MasterController
 
         private void StartRefreshTimer()
         {
-            refreshTimer = new Timer { Interval = 5000 }; // 5 seconds
+            refreshTimer = new System.Windows.Forms.Timer { Interval = 5000 }; // 5 seconds
             refreshTimer.Tick += async (s, e) => await RefreshSlaveStatusesAsync();
             refreshTimer.Start();
         }
@@ -161,6 +167,14 @@ namespace MasterController
                 SaveSlaves();
                 InitializeWidgets();
             }
+        }
+
+        private void SetDropDownMenus()
+        {
+            comboBox_FFBitrate.SelectedIndex = 2;
+            comboBox_FFDepth.SelectedIndex = 1;
+            comboBox_FFFramerate.SelectedIndex = 0;
+            comboBox_FFRes.SelectedIndex = 3;
         }
 
         private async void btn_SendMessage_Click(object sender, EventArgs e)
@@ -245,7 +259,6 @@ namespace MasterController
 
         private async void btn_LoadSourceImages_Click(object sender, EventArgs e)
         {
-
             using OpenFileDialog openFileDialog = new();
             openFileDialog.Title = "Sélectionner une image";
 
@@ -258,34 +271,71 @@ namespace MasterController
                 settings.SourceImagePath = folderPath;
                 settings.ImageName = fileName;
 
+                var match = Regex.Match(fileName, @"^(.*?)(_|\.)?(\d+)\.(\w+)$");
 
-                var match = Regex.Match(fileName, @"^(.*?)[._]\d+\.(\w+)$");
                 if (match.Success)
                 {
                     string baseName = match.Groups[1].Value;
-                    string extension = match.Groups[2].Value;
+                    string numberPart = match.Groups[3].Value;
+                    string extension = match.Groups[4].Value;
 
-                    string ffmpegPattern = $"{baseName}_%08d.{extension}";
+                    int digitCount = numberPart.Length;
+                    string ffmpegPattern = $"{baseName}_%0{digitCount}d.{extension}";
                     settings.ImageName = ffmpegPattern;
                     lbl_imageNameFormatted.Text = ffmpegPattern;
                 }
                 else
                 {
-                    MessageBox.Show("Le nom de fichier ne correspond pas au format attendu (ex: image_00000001.png).");
+                    MessageBox.Show("Le nom de fichier ne correspond pas au format attendu (ex: image_00001.jpg).");
                     return;
                 }
 
-
-
                 lbl_SourceImagePath.Text = folderPath;
-
-
                 settings.Save();
+                textBox_NbrImages.ForeColor = Color.Red;
                 textBox_NbrImages.Text = "Calcul en cours";
-                Task.Run(async () => await CalculateImageNumber(folderPath, fileName));
 
+                // Trouver le premier frame et le dernier frame
+                await Task.Run(() =>
+                {
+
+                    var regex = new Regex(@"(\d+)\.(\w+)$", RegexOptions.IgnoreCase);
+
+                    var files = Directory.GetFiles(folderPath, "*.*")
+                                         .Where(f => regex.IsMatch(Path.GetFileName(f)))
+                                         .ToList();
+
+                    var frameNumbers = files
+                        .Select(f => regex.Match(Path.GetFileName(f)))
+                        .Where(m => m.Success)
+                        .Select(m => int.Parse(m.Groups[1].Value))
+                        .ToList();
+
+
+                    if (frameNumbers.Count > 0)
+                    {
+                        int minFrame = frameNumbers.Min();
+                        int maxFrame = frameNumbers.Max();
+
+                        Invoke(() =>
+                        {
+                            textBox_premierFrame.Text = minFrame.ToString();
+                            textBox_dernierFrame.Text = maxFrame.ToString();
+                        });
+                    }
+                    else
+                    {
+                        Invoke(() =>
+                        {
+                            MessageBox.Show("Aucune image valide trouvée dans le dossier.");
+                            textBox_premierFrame.Text = "-";
+                            textBox_dernierFrame.Text = "-";
+                        });
+                    }
+                });
+
+                await Task.Run(async () => await CalculateImageNumber(folderPath, fileName));
             }
-
         }
 
         private async Task CalculateImageNumber(string folderPath, string fileName)
@@ -318,6 +368,7 @@ namespace MasterController
                 this.Invoke(new Action(() =>
                 {
                     UpdateUI(count);
+                    textBox_NbrImages.ForeColor = Color.White;
                 }));
             }
             else
@@ -364,7 +415,8 @@ namespace MasterController
                     settings.DestinationName = fullFileName;
                     settings.Save();
 
-                    lbl_DestinationPath.Text = Path.Combine(folderPath, fullFileName);
+                    textBox_DestinationPath.Text = Path.Combine(folderPath, fullFileName);
+                    textBox_ConcatInputVideoPath.Text = textBox_DestinationPath.Text;
                 }
             }
         }
@@ -375,18 +427,18 @@ namespace MasterController
 
             if (settings != null)
             {
-                if (!string.IsNullOrEmpty(settings.SourceImagePath))
-                {
-                    lbl_SourceImagePath.Text = settings.SourceImagePath;
-                }
+                //if (!string.IsNullOrEmpty(settings.SourceImagePath))
+                //{
+                //    lbl_SourceImagePath.Text = settings.SourceImagePath;
+                //}
 
                 if (!string.IsNullOrEmpty(settings.DestinationPath))
                 {
                     if (!string.IsNullOrEmpty(settings.DestinationName))
                     {
-                        lbl_DestinationPath.Text = settings.DestinationPath + "\\" + settings.DestinationName;
+                        textBox_DestinationPath.Text = settings.DestinationPath + "\\" + settings.DestinationName;
                     }
-                    else { lbl_DestinationPath.Text = settings.DestinationPath; }
+                    else { textBox_DestinationPath.Text = settings.DestinationPath; }
 
                 }
 
@@ -417,38 +469,29 @@ namespace MasterController
         private void LoadFFPresets()
         {
 
-            string presetsFolder = settings.FFMPEGPresetsPath;
-            if (comboBox_ffPresets.Items.Count > 0)
-            {
-                comboBox_ffPresets.SelectedItem = settings.FFMPEGPreset;
-            }
+            //string presetsFolder = settings.FFMPEGPresetsPath;
+            //if (comboBox_ffPresets.Items.Count > 0)
+            //{
+            //    comboBox_ffPresets.SelectedItem = settings.FFMPEGPreset;
+            //}
 
-            if (Directory.Exists(presetsFolder))
-            {
-                string[] files = Directory.GetFiles(presetsFolder);
+            //if (Directory.Exists(presetsFolder))
+            //{
+            //    string[] files = Directory.GetFiles(presetsFolder);
 
-                comboBox_ffPresets.Items.Clear();
+            //    comboBox_ffPresets.Items.Clear();
 
-                foreach (string file in files)
-                {
-                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
-                    comboBox_ffPresets.Items.Add(fileNameWithoutExtension);
-                }
-                lbl_ffmpegPresetPath.Text = presetsFolder;
+            //    foreach (string file in files)
+            //    {
+            //        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+            //        comboBox_ffPresets.Items.Add(fileNameWithoutExtension);
+            //    }
 
-            }
-            else
-            {
-                FFMPEGSetPresetPath();
-            }
-        }
-
-        private void btn_AutoAssign_Click(object sender, EventArgs e)
-        {
-
-            //var slaveForm = new SlaveSpreadForm(slaves);
-            //slaveForm.Show();
-
+            //}
+            //else
+            //{
+            //    FFMPEGSetPresetPath();
+            //}
         }
 
         private void btn_ffPresetsPath_Click(object sender, EventArgs e)
@@ -465,37 +508,38 @@ namespace MasterController
             {
                 settings.FFMPEGPresetsPath = folderDialog.SelectedPath;
                 settings.Save(); // Sauvegarde dans le fichier config
-                lbl_ffmpegPresetPath.Text = folderDialog.SelectedPath;
             }
         }
 
         private void comboBox_ffPresets_SelectedIndexChanged(object sender, EventArgs e)
         {
-            settings.FFMPEGPreset = comboBox_ffPresets.SelectedItem.ToString();
+            //settings.FFMPEGPreset = comboBox_ffPresets.SelectedItem.ToString();
         }
 
         private void btn_autoSplit_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(textBox_NbrImages.Text, out int totalImages))
+            if (!int.TryParse(textBox_premierFrame.Text, out int firstFrame) ||
+                !int.TryParse(textBox_dernierFrame.Text, out int lastFrame))
             {
-                MessageBox.Show("Entrer le nombre d'images au total à splitter ou\nsélectionnez le dossier d'images pour un calcul automatique");
+                MessageBox.Show("Veuillez entrer des valeurs valides pour le premier et le dernier frame.");
                 return;
             }
+
+            int totalImages = lastFrame - firstFrame + 1;
 
             var selectedBlades = slaves.OrderBy(s => s.Name).Where(blade => blade.Utiliser).ToList();
             int bladeCount = selectedBlades.Count;
 
-            
             if (bladeCount == 0)
             {
-                MessageBox.Show("No blades selected.");
+                MessageBox.Show("Aucune blade sélectionnée.");
                 return;
             }
 
             int baseCount = totalImages / bladeCount;
             int remainder = totalImages % bladeCount;
 
-            int currentStart = 0;
+            int currentStart = firstFrame;
 
             for (int i = 0; i < bladeCount; i++)
             {
@@ -504,11 +548,295 @@ namespace MasterController
 
                 selectedBlades[i].StartFrame = currentStart;
                 selectedBlades[i].EndFrame = currentEnd;
-
+                selectedBlades[i].FrameCount = imagesForThisBlade;
+                selectedBlades[i].Part = i;
                 currentStart = currentEnd + 1;
+            }
+
+        }
+
+        private void SetFFMPEGPath()
+        {
+            settings.FFMPEGPath = textBox_FFMPEGpath.Text;
+            settings.Save();
+        }
+
+        private void textBox_FFMPEGpath_MouseLeave(object sender, EventArgs e)
+        {
+            SetFFMPEGPath();
+        }
+
+        private void textBox_FFMPEGpath_KeyDown(object sender, KeyEventArgs e)
+        {
+            SetFFMPEGPath();
+        }
+
+        private void textBox_DestinationPath_KeyDown(object sender, KeyEventArgs e)
+        {
+            SaveOutputDestinationPath();
+        }
+
+        private void textBox_DestinationPath_Leave(object sender, EventArgs e)
+        {
+            SaveOutputDestinationPath();
+        }
+
+        private void SaveOutputDestinationPath()
+        {
+            settings.DestinationPath = textBox_DestinationPath.Text;
+            settings.Save();
+        }
+
+        private void btn_ConcatOutPath_Click(object sender, EventArgs e)
+        {
+            using FolderBrowserDialog folderDialog = new();
+            folderDialog.Description = "Sélectionner un dossier de destination";
+
+            if (folderDialog.ShowDialog() == DialogResult.OK)
+            {
+                string folderPath = folderDialog.SelectedPath;
+
+                // Prompt for filename
+                string fileName = Microsoft.VisualBasic.Interaction.InputBox(
+                    "Entrez le nom du vidéo (sans extension) :",
+                    "Nom du fichier",
+                    "config");
+
+                if (!string.IsNullOrWhiteSpace(fileName))
+                {
+                    fileName = Path.GetFileNameWithoutExtension(fileName);
+                    string fullFileName = fileName + ".mp4";
+                    string fullPath = Path.Combine(folderPath, fullFileName);
+
+                    // Check if file exists
+                    if (File.Exists(fullPath))
+                    {
+                        DialogResult result = MessageBox.Show(
+                            $"Le fichier \"{fullFileName}\" existe déjà dans ce dossier.\nVoulez-vous l'écraser ?",
+                            "Fichier existant",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Warning);
+
+                        if (result != DialogResult.Yes)
+                        {
+                            return; // User chose not to overwrite
+                        }
+                    }
+
+                    textBox_ConcatOutputVideoPath.Text = fullPath;
+                }
             }
         }
 
+
+
+        private async void btn_StartConcat_Click(object sender, EventArgs e)
+        {
+            string ffmpegPath = settings.FFMPEGPath;
+            string outputPath = textBox_ConcatOutputVideoPath.Text;
+            string folderPath = textBox_ConcatInputVideoPath.Text;
+
+            if (string.IsNullOrEmpty(folderPath) || string.IsNullOrEmpty(outputPath) || ConcatList.Count == 0)
+            {
+                MessageBox.Show("Please make sure all paths are set and videos are selected.");
+                return;
+            }
+
+            // Create temporary file list for FFmpeg
+            string tempListPath = Path.Combine(Path.GetTempPath(), "ffmpeg_concat_list.txt");
+            using (StreamWriter writer = new StreamWriter(tempListPath))
+            {
+                foreach (string file in ConcatList)
+                {
+                    writer.WriteLine($"file '{file.Replace("'", "'\\''")}'");
+                }
+            }
+
+            // Prepare FFmpeg process
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = ffmpegPath,
+                Arguments = $"-y -f concat -safe 0 -i \"{tempListPath}\" -c copy \"{outputPath}\"",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            textBox_FFmpegConcatOutput.Clear();
+
+            void AppendLine(string line)
+            {
+                if (textBox_FFmpegConcatOutput.InvokeRequired)
+                {
+                    textBox_FFmpegConcatOutput.Invoke((MethodInvoker)(() =>
+                    {
+                        textBox_FFmpegConcatOutput.AppendText(line + Environment.NewLine);
+                        textBox_FFmpegConcatOutput.SelectionStart = textBox_FFmpegConcatOutput.Text.Length;
+                        textBox_FFmpegConcatOutput.ScrollToCaret();
+                    }));
+                }
+                else
+                {
+                    textBox_FFmpegConcatOutput.AppendText(line + Environment.NewLine);
+                    textBox_FFmpegConcatOutput.SelectionStart = textBox_FFmpegConcatOutput.Text.Length;
+                    textBox_FFmpegConcatOutput.ScrollToCaret();
+                }
+            }
+
+            AppendLine("Starting FFmpeg...");
+
+            ffmpegProcess = new Process { StartInfo = psi };
+
+            ffmpegProcess.OutputDataReceived += (s, ev) =>
+            {
+                if (ev.Data != null) AppendLine(ev.Data);
+            };
+
+            ffmpegProcess.ErrorDataReceived += (s, ev) =>
+            {
+                if (ev.Data != null) AppendLine(ev.Data);
+            };
+
+            ffmpegProcess.Start();
+            ffmpegProcess.BeginOutputReadLine();
+            ffmpegProcess.BeginErrorReadLine();
+
+            await ffmpegProcess.WaitForExitAsync();
+
+            AppendLine("FFmpeg process completed.");
+
+            try
+            {
+                const int maxRetries = 5;
+                const int delayMs = 500;
+
+                for (int i = 0; i < maxRetries; i++)
+                {
+                    try
+                    {
+                        if (File.Exists(tempListPath))
+                        {
+                            File.Delete(tempListPath);
+                        }
+                        break; // Success
+                    }
+                    catch (IOException)
+                    {
+                        await Task.Delay(delayMs); // Wait and retry
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppendLine($"Failed to delete temp file: {ex.Message}");
+            }
+
+        }
+
+
+
+        private void btn_selectVideos_Click(object sender, EventArgs e)
+        {
+
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = "Select a video file";
+                openFileDialog.Filter = "Video Files (*.mp4;*.avi;*.mov)|*.mp4;*.avi;*.mov|All Files (*.*)|*.*";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Display selected file path in the TextBox
+                    string selectedFilePath = openFileDialog.FileName;
+                    textBox_ConcatInputVideoPath.Text = Path.GetDirectoryName(selectedFilePath);
+
+                    // Get all files in the same folder
+                    string folderPath = Path.GetDirectoryName(selectedFilePath);
+                    string[] allFiles = Directory.GetFiles(folderPath);
+
+                    // Store in list and display in ListBox
+                    ConcatList.Clear();
+                    ConcatList.AddRange(allFiles);
+
+                    listBox_ConcatSource.Items.Clear();
+                    listBox_ConcatSource.Items.AddRange(ConcatList.ToArray());
+                }
+            }
+
+
+        }
+
+        private void btn_StopFFmpegProcess_Click(object sender, EventArgs e)
+        {
+            if (ffmpegProcess != null && !ffmpegProcess.HasExited)
+            {
+                try
+                {
+                    ffmpegProcess.Kill();
+                    textBox_FFmpegConcatOutput.AppendText("FFmpeg process was terminated." + Environment.NewLine);
+
+                    ffmpegProcess.WaitForExit();
+
+                    string tempListPath = Path.Combine(Path.GetTempPath(), "ffmpeg_concat_list.txt");
+
+                    // Retry deletion with delay
+                    for (int i = 0; i < 5; i++)
+                    {
+                        try
+                        {
+                            if (File.Exists(tempListPath))
+                            {
+                                File.Delete(tempListPath);
+                                textBox_FFmpegConcatOutput.AppendText("Temporary file deleted." + Environment.NewLine);
+                            }
+                            break;
+                        }
+                        catch (IOException)
+                        {
+                            Thread.Sleep(500); // Wait half a second before retrying
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error stopping FFmpeg: " + ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("FFmpeg is not running.");
+            }
+        }
+
+        private void comboBox_FFBitrate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            settings.FFBitrate = int.Parse(comboBox_FFBitrate.SelectedItem.ToString());
+        }
+
+        private void comboBox_FFFramerate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            settings.FFframeRate = int.Parse(comboBox_FFFramerate.SelectedItem.ToString());
+        }
+
+        private void comboBox_FFRes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            settings.FFResolution = comboBox_FFRes.SelectedItem.ToString();
+        }
+
+        private void comboBox_FFDepth_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox_FFDepth.SelectedIndex == 0)
+            {
+                settings.FFFormat = "yuv420p";
+                settings.FFProfile = "main";
+            }
+            else if (comboBox_FFDepth.SelectedIndex == 1)
+            {
+                settings.FFFormat = "yuv420p10le";
+                settings.FFProfile = "main10";
+            }           
+        }
     }
 
     public class AppSettings
@@ -533,6 +861,11 @@ namespace MasterController
         public string FFMPEGPath { get; set; }
         public string FFMPEGPresetsPath {  get; set; }
         public string FFMPEGPreset {  get; set; }
+        public int FFframeRate  { get; set; }
+        public int FFBitrate    { get; set; }   
+        public string FFResolution { get; set; }
+        public string FFFormat { get; set; }
+        public string FFProfile { get; set; }
         public void Save()
         {
             string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
@@ -551,7 +884,12 @@ namespace MasterController
                 ImageName = loaded.ImageName;
                 FFMPEGPath = loaded.FFMPEGPath;
                 FFMPEGPreset = loaded.FFMPEGPreset;
-                FFMPEGPresetsPath = loaded.FFMPEGPresetsPath;                
+                FFMPEGPresetsPath = loaded.FFMPEGPresetsPath;   
+                FFframeRate = 30;
+                FFBitrate = 60;
+                FFResolution = "6144:6144";
+                FFFormat = "yuv420p10le";
+                FFProfile = "main10";
             }
         }
 
@@ -559,12 +897,20 @@ namespace MasterController
 
     public class SlaveConfig : INotifyPropertyChanged  // Mes deux widgets (SlaveWidgetStatus et SlaveWidget) sont liés à un objet qui les notifient quand la valeur de NetworkStatus et Utiliser change.
     {
-        public event PropertyChangedEventHandler PropertyChanged; 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public SlaveConfig()
+        {
+            StartFrame = 0;
+            EndFrame = 0;
+            FrameCount = 0;
+        }
 
         public string Name { get; set; }
         public string Ip { get; set; }
         public int Port { get; set; }
         
+        public int Part {  get; set; }
        
         private bool _networkStatus;
         public bool NetworkStatus

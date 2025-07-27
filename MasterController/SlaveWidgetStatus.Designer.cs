@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SlaveWidgetStatus));
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            lbl_ffFeedback = new System.Windows.Forms.Label();
             textBox_EndFrame = new System.Windows.Forms.TextBox();
             checkBox_Utiliser = new System.Windows.Forms.CheckBox();
             lbl_BladeName = new System.Windows.Forms.Label();
@@ -39,7 +40,6 @@
             textBox_StartFrame = new System.Windows.Forms.TextBox();
             btn_StartSlaveJob = new System.Windows.Forms.Button();
             btn_EditFFmpegCommand = new System.Windows.Forms.Button();
-            lbl_ffFeedback = new System.Windows.Forms.Label();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -75,6 +75,17 @@
             tableLayoutPanel1.Size = new System.Drawing.Size(1114, 31);
             tableLayoutPanel1.TabIndex = 0;
             // 
+            // lbl_ffFeedback
+            // 
+            lbl_ffFeedback.AutoSize = true;
+            lbl_ffFeedback.Dock = System.Windows.Forms.DockStyle.Fill;
+            lbl_ffFeedback.ForeColor = System.Drawing.Color.White;
+            lbl_ffFeedback.Location = new System.Drawing.Point(786, 1);
+            lbl_ffFeedback.Name = "lbl_ffFeedback";
+            lbl_ffFeedback.Size = new System.Drawing.Size(223, 29);
+            lbl_ffFeedback.TabIndex = 9;
+            lbl_ffFeedback.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // textBox_EndFrame
             // 
             textBox_EndFrame.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
@@ -86,7 +97,9 @@
             textBox_EndFrame.Name = "textBox_EndFrame";
             textBox_EndFrame.Size = new System.Drawing.Size(94, 23);
             textBox_EndFrame.TabIndex = 6;
+            textBox_EndFrame.Text = "0";
             textBox_EndFrame.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            textBox_EndFrame.MouseLeave += textBox_EndFrame_TextChanged;
             // 
             // checkBox_Utiliser
             // 
@@ -159,7 +172,9 @@
             textBox_StartFrame.Name = "textBox_StartFrame";
             textBox_StartFrame.Size = new System.Drawing.Size(94, 23);
             textBox_StartFrame.TabIndex = 5;
+            textBox_StartFrame.Text = "0";
             textBox_StartFrame.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            textBox_StartFrame.MouseLeave += textBox_EndFrame_TextChanged;
             // 
             // btn_StartSlaveJob
             // 
@@ -193,18 +208,6 @@
             btn_EditFFmpegCommand.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             btn_EditFFmpegCommand.UseVisualStyleBackColor = true;
             btn_EditFFmpegCommand.Click += btn_EditFFmpegCommand_Click;
-            // 
-            // lbl_ffFeedback
-            // 
-            lbl_ffFeedback.AutoSize = true;
-            lbl_ffFeedback.Dock = System.Windows.Forms.DockStyle.Fill;
-            lbl_ffFeedback.ForeColor = System.Drawing.Color.White;
-            lbl_ffFeedback.Location = new System.Drawing.Point(786, 1);
-            lbl_ffFeedback.Name = "lbl_ffFeedback";
-            lbl_ffFeedback.Size = new System.Drawing.Size(223, 29);
-            lbl_ffFeedback.TabIndex = 9;
-            lbl_ffFeedback.Text = "Frame Fin";
-            lbl_ffFeedback.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // SlaveWidgetStatus
             // 

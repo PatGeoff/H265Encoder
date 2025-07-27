@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("MasterController")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("H265 Encodeur Master")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09b7209139a9981def896a04d2a57ce3d94bab2c")]
-[assembly: System.Reflection.AssemblyProductAttribute("MasterController")]
-[assembly: System.Reflection.AssemblyTitleAttribute("MasterController")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5b844b0811478018612761c0e470fff1b087ad2d")]
+[assembly: System.Reflection.AssemblyProductAttribute("H265 Encodeur Master")]
+[assembly: System.Reflection.AssemblyTitleAttribute("H265 Encodeur Master")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]

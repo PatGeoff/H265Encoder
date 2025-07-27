@@ -46,13 +46,19 @@ namespace MasterController
             lbl_bladeNetStat.ForeColor = _slave.NetworkStatus ? Color.Green : Color.Red;
         }
 
-       
+
 
         private void btn_deleteBlade_Click(object sender, EventArgs e)
         {
             this.Parent?.Controls.Remove(this);
             DeleteRequested?.Invoke(this, EventArgs.Empty);
-            WidgetActionTriggered?.Invoke(this, EventArgs.Empty); 
+            WidgetActionTriggered?.Invoke(this, EventArgs.Empty);
+        }
+
+
+        private void hScrollBar1_ValueChanged(object sender, EventArgs e)
+        {
+            lbl_instances.Text= hScrollBar1.Value.ToString();
         }
     }
 }

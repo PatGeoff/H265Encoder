@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("SlaveWorker")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("H265 Encodeur Slave")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+260b539bb04c1010bd5a1820fb04e8a81123ad67")]
-[assembly: System.Reflection.AssemblyProductAttribute("SlaveWorker")]
-[assembly: System.Reflection.AssemblyTitleAttribute("SlaveWorker")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5b844b0811478018612761c0e470fff1b087ad2d")]
+[assembly: System.Reflection.AssemblyProductAttribute("H265 Encodeur Slave")]
+[assembly: System.Reflection.AssemblyTitleAttribute("H265 Encodeur Slave")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]

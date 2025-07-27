@@ -3,52 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\ffmpegeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:ffmpegeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\slaveeditorform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:slaveeditorform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\mastercontroller.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:mastercontroller.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\slavewidgetstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:slavewidgetstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\slavewidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:slavewidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\ffmpegeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:ffmpegeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\slavewidgetstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:slavewidgetstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\slaveeditorform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:slaveeditorform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\ffmpegeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:ffmpegeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\slavewidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:slavewidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\json.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:json.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\slavewidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:slavewidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\slaveeditorform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:slaveeditorform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\ffmpegeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:ffmpegeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\encoderpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:encoderpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\mastercontroller\\slavewidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{11111111-1111-1111-1111-111111111111}|MasterController.csproj|solutionrelative:slavewidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,17 +62,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 2308,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "MainForm.cs",
               "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\MainForm.cs",
               "RelativeDocumentMoniker": "MainForm.cs",
               "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\MainForm.cs",
               "RelativeToolTip": "MainForm.cs",
-              "ViewState": "AgIAAGACAAAAAAAAAAAwwHECAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAEwLAAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-21T16:43:10.717Z",
               "IsPinned": true,
@@ -77,32 +81,121 @@
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "SlaveWidgetStatus.cs",
-              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidgetStatus.cs",
-              "RelativeDocumentMoniker": "SlaveWidgetStatus.cs",
-              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidgetStatus.cs",
-              "RelativeToolTip": "SlaveWidgetStatus.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAiwFMAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T12:40:57.756Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
               "Title": "SlaveWidget.cs",
               "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidget.cs",
               "RelativeDocumentMoniker": "SlaveWidget.cs",
               "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidget.cs",
               "RelativeToolTip": "SlaveWidget.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAQwC4AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAA5wBcAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-21T17:12:48.858Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SlaveWidgetStatus.cs",
+              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidgetStatus.cs",
+              "RelativeDocumentMoniker": "SlaveWidgetStatus.cs",
+              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidgetStatus.cs",
+              "RelativeToolTip": "SlaveWidgetStatus.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAwwDgAAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T12:40:57.756Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "MasterController",
+              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\MasterController.csproj",
+              "RelativeDocumentMoniker": "MasterController.csproj",
+              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\MasterController.csproj",
+              "RelativeToolTip": "MasterController.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-27T18:33:48.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\MainForm.cs",
+              "RelativeDocumentMoniker": "MainForm.cs",
+              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\MainForm.cs [Design]",
+              "RelativeToolTip": "MainForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-21T16:43:57.599Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SlaveWidgetStatus.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidgetStatus.cs",
+              "RelativeDocumentMoniker": "SlaveWidgetStatus.cs",
+              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidgetStatus.cs [Design]",
+              "RelativeToolTip": "SlaveWidgetStatus.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T12:36:28.57Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FFMPEGEditor.cs",
+              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\FFMPEGEditor.cs",
+              "RelativeDocumentMoniker": "FFMPEGEditor.cs",
+              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\FFMPEGEditor.cs",
+              "RelativeToolTip": "FFMPEGEditor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T14:44:08.308Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "SlaveWidget.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidget.cs",
+              "RelativeDocumentMoniker": "SlaveWidget.cs",
+              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidget.cs [Design]",
+              "RelativeToolTip": "SlaveWidget.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T17:31:34.354Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MainForm.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\MainForm.Designer.cs",
+              "RelativeDocumentMoniker": "MainForm.Designer.cs",
+              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\MainForm.Designer.cs",
+              "RelativeToolTip": "MainForm.Designer.cs",
+              "ViewState": "AgIAAI8CAAAAAAAAAAAswKoCAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-26T18:14:37.399Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "JSON.cs",
+              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\JSON.cs",
+              "RelativeDocumentMoniker": "JSON.cs",
+              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\JSON.cs",
+              "RelativeToolTip": "JSON.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T13:25:22.135Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "SlaveEditorForm.cs",
               "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveEditorForm.cs",
               "RelativeDocumentMoniker": "SlaveEditorForm.cs",
@@ -115,68 +208,18 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SlaveEditorForm.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveEditorForm.cs",
-              "RelativeDocumentMoniker": "SlaveEditorForm.cs",
-              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveEditorForm.cs [Design]",
-              "RelativeToolTip": "SlaveEditorForm.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-21T16:45:19.282Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MainForm.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\MainForm.cs",
-              "RelativeDocumentMoniker": "MainForm.cs",
-              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\MainForm.cs [Design]",
-              "RelativeToolTip": "MainForm.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-21T16:43:57.599Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SlaveWidgetStatus.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidgetStatus.cs",
-              "RelativeDocumentMoniker": "SlaveWidgetStatus.cs",
-              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidgetStatus.cs [Design]",
-              "RelativeToolTip": "SlaveWidgetStatus.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T12:36:28.57Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FFMPEGEditor.cs",
-              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\FFMPEGEditor.cs",
-              "RelativeDocumentMoniker": "FFMPEGEditor.cs",
-              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\FFMPEGEditor.cs",
-              "RelativeToolTip": "FFMPEGEditor.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAgwCUAAABtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-24T14:44:08.308Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "FFMPEGEditor.cs [Design]",
               "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\FFMPEGEditor.cs",
               "RelativeDocumentMoniker": "FFMPEGEditor.cs",
               "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\FFMPEGEditor.cs [Design]",
               "RelativeToolTip": "FFMPEGEditor.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-24T14:35:23.516Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-07-24T14:35:23.516Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "EncoderPage.cs",
               "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\EncoderPage.cs",
               "RelativeDocumentMoniker": "EncoderPage.cs",
@@ -184,33 +227,7 @@
               "RelativeToolTip": "EncoderPage.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T13:25:56.517Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "JSON.cs",
-              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\JSON.cs",
-              "RelativeDocumentMoniker": "JSON.cs",
-              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\JSON.cs",
-              "RelativeToolTip": "JSON.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAqwA0AAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T13:25:22.135Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "SlaveWidget.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidget.cs",
-              "RelativeDocumentMoniker": "SlaveWidget.cs",
-              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\SlaveWidget.cs [Design]",
-              "RelativeToolTip": "SlaveWidget.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-24T17:31:34.354Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-07-22T13:25:56.517Z"
             }
           ]
         },

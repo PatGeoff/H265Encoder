@@ -5,8 +5,13 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>MasterController</RootNamespace>
-    <AssemblyName>MasterController</AssemblyName>
+    <AssemblyName>H265 Encodeur Master</AssemblyName>
+    <ApplicationIcon>myResources\images\logoMaster.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="myResources\images\logoMaster.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

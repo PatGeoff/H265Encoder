@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,6 +16,11 @@ namespace SlaveWorker
     public partial class MainForm : Form
     {
         private TcpListener listener;
+        private string commande;
+        private Process currentProcess;
+        private readonly List<NetworkStream> connectedClients = new();
+        private readonly object clientLock = new();
+
 
         public MainForm()
         {
@@ -34,13 +43,26 @@ namespace SlaveWorker
                         TcpClient client = listener.AcceptTcpClient();
                         NetworkStream stream = client.GetStream();
                         StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                        string command = reader.ReadToEnd();
+                        string command = reader.ReadLine();
+
+                        // Send response back to client
+                        byte[] responseBytes = Encoding.UTF8.GetBytes("Blade a reçu la commande " + command + "\n");
+                        stream.Write(responseBytes, 0, responseBytes.Length);
+                        stream.Flush();
+
+
                         if (!string.IsNullOrWhiteSpace(command))
                         {
-                            AppendText("Received command: " + command);
+
+                            if (command.Contains("StartJob"))
+                            {
+                                commande = command.Split("StartJob")[1];
+                                ExecuteFFmpeg(commande, stream);
+                            }
                         }
-                        //ExecuteFFmpeg(command, stream);
-                        client.Close();
+
+
+                        //client.Close();
                     }
                 }
                 catch (Exception ex)
@@ -50,38 +72,92 @@ namespace SlaveWorker
             });
         }
 
+
+
         private void ExecuteFFmpeg(string command, NetworkStream stream)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    Process ffmpeg = new Process();
-                    ffmpeg.StartInfo.FileName = "ffmpeg";
-                    ffmpeg.StartInfo.Arguments = command;
-                    ffmpeg.StartInfo.RedirectStandardError = true;
-                    ffmpeg.StartInfo.UseShellExecute = false;
-                    ffmpeg.StartInfo.CreateNoWindow = true;
+                    var match = Regex.Match(command.Trim(), "^\"([^\"]+)\"\\s+(.*)");
+                    if (!match.Success)
+                        throw new InvalidOperationException("Invalid command format. Expected quoted executable path.");
 
-                    ffmpeg.ErrorDataReceived += (s, e) =>
+                    string executable = match.Groups[1].Value;
+                    string arguments = match.Groups[2].Value;
+
+                    currentProcess = new Process();
+                    currentProcess.StartInfo.FileName = executable;
+                    currentProcess.StartInfo.Arguments = arguments;
+                    currentProcess.StartInfo.RedirectStandardError = true;
+                    currentProcess.StartInfo.RedirectStandardOutput = true;
+                    currentProcess.StartInfo.UseShellExecute = false;
+                    currentProcess.StartInfo.CreateNoWindow = true;
+
+                    currentProcess.ErrorDataReceived += (s, e) =>
                     {
                         if (!string.IsNullOrEmpty(e.Data))
                         {
                             AppendText(e.Data);
                             byte[] data = Encoding.UTF8.GetBytes(e.Data + "\n");
-                            stream.Write(data, 0, data.Length);
+                            if (stream.CanWrite)
+                                stream.Write(data, 0, data.Length);
                         }
                     };
 
-                    ffmpeg.Start();
-                    ffmpeg.BeginErrorReadLine();
-                    ffmpeg.WaitForExit();
+                    currentProcess.OutputDataReceived += (s, e) =>
+                    {
+                        if (!string.IsNullOrEmpty(e.Data))
+                        {
+                            AppendText(e.Data);
+                            byte[] data = Encoding.UTF8.GetBytes(e.Data + "\n");
+                            if (stream.CanWrite)
+                                stream.Write(data, 0, data.Length);
+                        }
+                    };
+
+                    currentProcess.Start();
+                    currentProcess.BeginErrorReadLine();
+                    currentProcess.BeginOutputReadLine();
+
+
+                    // Surveiller la connexion
+                    while (!currentProcess.HasExited)
+                    {
+                        if (!IsClientConnected(stream))
+                        {
+                            AppendText("Connexion perdue. Arrêt du processus FFmpeg.");
+                            try { currentProcess.Kill(); } catch { }
+                            break;
+                        }
+                        Thread.Sleep(500);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    AppendText("Execution error: " + ex.Message);
+                    string errorMsg = "Execution error: " + ex.Message;
+                    AppendText(errorMsg);
+                    byte[] data = Encoding.UTF8.GetBytes(errorMsg + "\n");
+                    if (stream.CanWrite)
+                        stream.Write(data, 0, data.Length);
                 }
             });
+        }
+
+        private bool IsClientConnected(NetworkStream stream)
+        {
+            try
+            {
+                if (stream == null || !stream.CanRead)
+                    return false;
+
+                return !(stream.Socket.Poll(1, SelectMode.SelectRead) && stream.Socket.Available == 0);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void AppendText(string text)
@@ -92,8 +168,16 @@ namespace SlaveWorker
             }
             else
             {
-                textBoxOutput.AppendText(text + Environment.NewLine);
+                textBox_Output.AppendText(text + Environment.NewLine);
             }
         }
+
+        private void btn_ClearText_Click(object sender, EventArgs e)
+        {
+            textBox_Output.Clear();
+        }
+
+       
+
     }
 }

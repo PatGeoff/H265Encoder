@@ -4,5 +4,10 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>SlaveWorker</RootNamespace>
+    <AssemblyName>H265 Encodeur Slave</AssemblyName>
+    <ApplicationIcon>myResources\images\logoSlave.ico</ApplicationIcon>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="myResources\images\logoSlave.ico" />
+  </ItemGroup>
 </Project>

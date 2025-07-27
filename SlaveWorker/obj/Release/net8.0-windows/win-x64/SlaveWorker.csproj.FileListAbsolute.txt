@@ -472,3 +472,6 @@ C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.pdb
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.genruntimeconfig.cache
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\ref\SlaveWorker.dll
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.MainForm.resources
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.csproj.GenerateResource.cache
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.sourcelink.json
