@@ -23,7 +23,8 @@ namespace MasterController
 
 
             textBox_ffmpegCommand.Text = slave.FFMPEGCommand;
-
+            textBox_ffmpegCommand.SelectionStart = 0;
+            textBox_ffmpegCommand.SelectionLength = 0;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

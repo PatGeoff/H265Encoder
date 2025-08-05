@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\SlaveWorker\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A0A4EF6A-5B61-4703-BC60-D4B0DF9A5509}|SlaveWorker.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\slaveworker\\slaveworker.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{A0A4EF6A-5B61-4703-BC60-D4B0DF9A5509}|SlaveWorker.csproj|solutionrelative:slaveworker.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+      "AbsoluteMoniker": "D:0:0:{A0A4EF6A-5B61-4703-BC60-D4B0DF9A5509}|SlaveWorker.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\slaveworker\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0A4EF6A-5B61-4703-BC60-D4B0DF9A5509}|SlaveWorker.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A0A4EF6A-5B61-4703-BC60-D4B0DF9A5509}|SlaveWorker.csproj|C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\SlaveWorker\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{A0A4EF6A-5B61-4703-BC60-D4B0DF9A5509}|SlaveWorker.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A0A4EF6A-5B61-4703-BC60-D4B0DF9A5509}|SlaveWorker.csproj|c:\\users\\tech\\source\\repos\\h265renderdistributor\\slaveworker\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A0A4EF6A-5B61-4703-BC60-D4B0DF9A5509}|SlaveWorker.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,20 +18,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 2308,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SlaveWorker",
-              "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\SlaveWorker\\SlaveWorker.csproj",
-              "RelativeDocumentMoniker": "SlaveWorker.csproj",
-              "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\SlaveWorker\\SlaveWorker.csproj",
-              "RelativeToolTip": "SlaveWorker.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-07-27T15:40:28.151Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -50,13 +34,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "MainForm.cs",
               "DocumentMoniker": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\SlaveWorker\\MainForm.cs",
               "RelativeDocumentMoniker": "MainForm.cs",
               "ToolTip": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\SlaveWorker\\MainForm.cs",
               "RelativeToolTip": "MainForm.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAADwv7cAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAIwIkAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-21T20:45:55.973Z",
               "EditorCaption": ""

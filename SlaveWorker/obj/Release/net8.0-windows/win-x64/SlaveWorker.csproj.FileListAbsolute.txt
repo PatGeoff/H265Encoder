@@ -1,8 +1,3 @@
-C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\SlaveWorker.exe
-C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\SlaveWorker.deps.json
-C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\SlaveWorker.runtimeconfig.json
-C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\SlaveWorker.dll
-C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\SlaveWorker.pdb
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\Microsoft.CSharp.dll
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\Microsoft.VisualBasic.Core.dll
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\Microsoft.Win32.Primitives.dll
@@ -467,11 +462,16 @@ C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.AssemblyInfo.cs
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.csproj.CoreCompileInputs.cache
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWor.1675BD97.Up2Date
-C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.dll
-C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\refint\SlaveWorker.dll
-C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.pdb
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.genruntimeconfig.cache
-C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\ref\SlaveWorker.dll
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.MainForm.resources
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.csproj.GenerateResource.cache
 C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\SlaveWorker.sourcelink.json
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\H265 Encodeur Slave.exe
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\H265 Encodeur Slave.deps.json
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\H265 Encodeur Slave.runtimeconfig.json
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\H265 Encodeur Slave.dll
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\bin\Release\net8.0-windows\win-x64\H265 Encodeur Slave.pdb
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\H265 Encodeur Slave.dll
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\refint\H265 Encodeur Slave.dll
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\H265 Encodeur Slave.pdb
+C:\Users\tech\source\repos\H265RenderDistributor\SlaveWorker\obj\Release\net8.0-windows\win-x64\ref\H265 Encodeur Slave.dll

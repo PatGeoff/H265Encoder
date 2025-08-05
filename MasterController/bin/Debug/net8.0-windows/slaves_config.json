@@ -12,7 +12,7 @@
     "EndFrame": 0,
     "_frameCount": 0,
     "FrameCount": 0,
-    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 60 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Monde de glace\\DPX Finaux 1 juin 2022\\WorldsOfIce_EN_220421_6K_60fps\\WorldsOfIce_EN_220421_6K_60fps_%08d.dpx\u0022 -frames:v 0 -b:v 100M -maxrate 100M -minrate 100M -bufsize 100M -vf scale=5948:5948 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
+    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 30 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Dark_Universe\\Images Source\\darkuniverse_colo\\DU_Col_V2_4k_%05d.png\u0022 -frames:v 0 -b:v 60M -maxrate 60M -minrate 60M -bufsize 60M -vf scale=6144:6144 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
   },
   {
     "Name": "Blade 1",
@@ -27,7 +27,7 @@
     "EndFrame": 0,
     "_frameCount": 0,
     "FrameCount": 0,
-    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 60 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Monde de glace\\DPX Finaux 1 juin 2022\\WorldsOfIce_EN_220421_6K_60fps\\WorldsOfIce_EN_220421_6K_60fps_%08d.dpx\u0022 -frames:v 0 -b:v 100M -maxrate 100M -minrate 100M -bufsize 100M -vf scale=5948:5948 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
+    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 30 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Dark_Universe\\Images Source\\darkuniverse_colo\\DU_Col_V2_4k_%05d.png\u0022 -frames:v 0 -b:v 60M -maxrate 60M -minrate 60M -bufsize 60M -vf scale=6144:6144 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
   },
   {
     "Name": "Blade 2",
@@ -42,7 +42,7 @@
     "EndFrame": 0,
     "_frameCount": 0,
     "FrameCount": 0,
-    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 60 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Monde de glace\\DPX Finaux 1 juin 2022\\WorldsOfIce_EN_220421_6K_60fps\\WorldsOfIce_EN_220421_6K_60fps_%08d.dpx\u0022 -frames:v 0 -b:v 100M -maxrate 100M -minrate 100M -bufsize 100M -vf scale=5948:5948 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
+    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 30 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Dark_Universe\\Images Source\\darkuniverse_colo\\DU_Col_V2_4k_%05d.png\u0022 -frames:v 0 -b:v 60M -maxrate 60M -minrate 60M -bufsize 60M -vf scale=6144:6144 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
   },
   {
     "Name": "Blade 3",
@@ -57,7 +57,7 @@
     "EndFrame": 0,
     "_frameCount": 0,
     "FrameCount": 0,
-    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 60 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Monde de glace\\DPX Finaux 1 juin 2022\\WorldsOfIce_EN_220421_6K_60fps\\WorldsOfIce_EN_220421_6K_60fps_%08d.dpx\u0022 -frames:v 0 -b:v 100M -maxrate 100M -minrate 100M -bufsize 100M -vf scale=5948:5948 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
+    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 30 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Dark_Universe\\Images Source\\darkuniverse_colo\\DU_Col_V2_4k_%05d.png\u0022 -frames:v 0 -b:v 60M -maxrate 60M -minrate 60M -bufsize 60M -vf scale=6144:6144 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
   },
   {
     "Name": "Blade 4",
@@ -72,7 +72,7 @@
     "EndFrame": 0,
     "_frameCount": 0,
     "FrameCount": 0,
-    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 60 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Monde de glace\\DPX Finaux 1 juin 2022\\WorldsOfIce_EN_220421_6K_60fps\\WorldsOfIce_EN_220421_6K_60fps_%08d.dpx\u0022 -frames:v 0 -b:v 100M -maxrate 100M -minrate 100M -bufsize 100M -vf scale=5948:5948 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
+    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 30 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Dark_Universe\\Images Source\\darkuniverse_colo\\DU_Col_V2_4k_%05d.png\u0022 -frames:v 0 -b:v 60M -maxrate 60M -minrate 60M -bufsize 60M -vf scale=6144:6144 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
   },
   {
     "Name": "Blade 5",
@@ -87,7 +87,7 @@
     "EndFrame": 0,
     "_frameCount": 0,
     "FrameCount": 0,
-    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 60 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Monde de glace\\DPX Finaux 1 juin 2022\\WorldsOfIce_EN_220421_6K_60fps\\WorldsOfIce_EN_220421_6K_60fps_%08d.dpx\u0022 -frames:v 0 -b:v 100M -maxrate 100M -minrate 100M -bufsize 100M -vf scale=5948:5948 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
+    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 30 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Dark_Universe\\Images Source\\darkuniverse_colo\\DU_Col_V2_4k_%05d.png\u0022 -frames:v 0 -b:v 60M -maxrate 60M -minrate 60M -bufsize 60M -vf scale=6144:6144 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
   },
   {
     "Name": "Blade 7",
@@ -102,7 +102,7 @@
     "EndFrame": 0,
     "_frameCount": 0,
     "FrameCount": 0,
-    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 60 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Monde de glace\\DPX Finaux 1 juin 2022\\WorldsOfIce_EN_220421_6K_60fps\\WorldsOfIce_EN_220421_6K_60fps_%08d.dpx\u0022 -frames:v 0 -b:v 100M -maxrate 100M -minrate 100M -bufsize 100M -vf scale=5948:5948 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
+    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 30 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Dark_Universe\\Images Source\\darkuniverse_colo\\DU_Col_V2_4k_%05d.png\u0022 -frames:v 0 -b:v 60M -maxrate 60M -minrate 60M -bufsize 60M -vf scale=6144:6144 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
   },
   {
     "Name": "Blade 8",
@@ -117,7 +117,7 @@
     "EndFrame": 0,
     "_frameCount": 0,
     "FrameCount": 0,
-    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 60 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Monde de glace\\DPX Finaux 1 juin 2022\\WorldsOfIce_EN_220421_6K_60fps\\WorldsOfIce_EN_220421_6K_60fps_%08d.dpx\u0022 -frames:v 0 -b:v 100M -maxrate 100M -minrate 100M -bufsize 100M -vf scale=5948:5948 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
+    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 30 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Dark_Universe\\Images Source\\darkuniverse_colo\\DU_Col_V2_4k_%05d.png\u0022 -frames:v 0 -b:v 60M -maxrate 60M -minrate 60M -bufsize 60M -vf scale=6144:6144 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
   },
   {
     "Name": "Blade 9",
@@ -132,21 +132,6 @@
     "EndFrame": 0,
     "_frameCount": 0,
     "FrameCount": 0,
-    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 60 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Monde de glace\\DPX Finaux 1 juin 2022\\WorldsOfIce_EN_220421_6K_60fps\\WorldsOfIce_EN_220421_6K_60fps_%08d.dpx\u0022 -frames:v 0 -b:v 100M -maxrate 100M -minrate 100M -bufsize 100M -vf scale=5948:5948 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
-  },
-  {
-    "Name": "local",
-    "Ip": "192.168.100.196",
-    "Port": 9000,
-    "Part": 0,
-    "NetworkStatus": false,
-    "Utiliser": false,
-    "_startFrame": 0,
-    "StartFrame": 0,
-    "_endFrame": 0,
-    "EndFrame": 0,
-    "_frameCount": 0,
-    "FrameCount": 0,
-    "FFMPEGCommand": null
+    "FFMPEGCommand": "\u0022C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe\u0022 -r 30 -start_number 0 -i \u0022\\\\FREENASPOLARIS\\PolarisTech\\Dark_Universe\\Images Source\\darkuniverse_colo\\DU_Col_V2_4k_%05d.png\u0022 -frames:v 0 -b:v 60M -maxrate 60M -minrate 60M -bufsize 60M -vf scale=6144:6144 -c:v libx265 -pix_fmt yuv420p10le -profile:v main10 -threads 72 -x265-params \u0022pools=2:frame-threads=16:wpp=1\u0022 -y \u0022\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane\\config_0.mp4\u0022"
   }
 ]

@@ -15,7 +15,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\MasterController.csproj",
-      "projectName": "H265 Encodeur Master",
+      "projectName": "MasterController",
       "projectPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\MasterController.csproj",
       "packagesPath": "C:\\Users\\tech\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\MasterController\\obj\\",

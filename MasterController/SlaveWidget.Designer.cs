@@ -52,7 +52,7 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            tableLayoutPanel1.Size = new System.Drawing.Size(542, 31);
+            tableLayoutPanel1.Size = new System.Drawing.Size(716, 31);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -62,8 +62,8 @@
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 159F));
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85F));
-            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 41F));
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 171F));
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
             tableLayoutPanel2.Controls.Add(lbl_instances, 5, 0);
             tableLayoutPanel2.Controls.Add(label1, 3, 0);
@@ -77,7 +77,7 @@
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new System.Drawing.Size(536, 25);
+            tableLayoutPanel2.Size = new System.Drawing.Size(710, 25);
             tableLayoutPanel2.TabIndex = 0;
             // 
             // lbl_instances
@@ -86,9 +86,9 @@
             lbl_instances.Dock = System.Windows.Forms.DockStyle.Fill;
             lbl_instances.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             lbl_instances.ForeColor = System.Drawing.Color.White;
-            lbl_instances.Location = new System.Drawing.Point(479, 0);
+            lbl_instances.Location = new System.Drawing.Point(600, 0);
             lbl_instances.Name = "lbl_instances";
-            lbl_instances.Size = new System.Drawing.Size(35, 25);
+            lbl_instances.Size = new System.Drawing.Size(87, 25);
             lbl_instances.TabIndex = 7;
             lbl_instances.Text = "1";
             lbl_instances.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -152,9 +152,9 @@
             btn_deleteBlade.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btn_deleteBlade.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             btn_deleteBlade.ForeColor = System.Drawing.Color.DarkGray;
-            btn_deleteBlade.Location = new System.Drawing.Point(520, 3);
+            btn_deleteBlade.Location = new System.Drawing.Point(693, 3);
             btn_deleteBlade.Name = "btn_deleteBlade";
-            btn_deleteBlade.Size = new System.Drawing.Size(13, 19);
+            btn_deleteBlade.Size = new System.Drawing.Size(14, 19);
             btn_deleteBlade.TabIndex = 4;
             btn_deleteBlade.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             btn_deleteBlade.UseVisualStyleBackColor = true;
@@ -163,11 +163,12 @@
             // hScrollBar1
             // 
             hScrollBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            hScrollBar1.LargeChange = 5;
+            hScrollBar1.LargeChange = 4;
             hScrollBar1.Location = new System.Drawing.Point(426, 0);
             hScrollBar1.Maximum = 4;
+            hScrollBar1.Minimum = 1;
             hScrollBar1.Name = "hScrollBar1";
-            hScrollBar1.Size = new System.Drawing.Size(50, 25);
+            hScrollBar1.Size = new System.Drawing.Size(171, 25);
             hScrollBar1.TabIndex = 8;
             hScrollBar1.Value = 1;
             hScrollBar1.ValueChanged += hScrollBar1_ValueChanged;
@@ -180,7 +181,7 @@
             BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             Controls.Add(tableLayoutPanel1);
             Name = "SlaveWidget";
-            Size = new System.Drawing.Size(542, 31);
+            Size = new System.Drawing.Size(716, 31);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();

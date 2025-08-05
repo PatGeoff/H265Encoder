@@ -16,7 +16,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\SlaveWorker\\SlaveWorker.csproj",
-      "projectName": "SlaveWorker",
+      "projectName": "H265 Encodeur Slave",
       "projectPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\SlaveWorker\\SlaveWorker.csproj",
       "packagesPath": "C:\\Users\\tech\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\SlaveWorker\\obj\\publish\\win-x64\\",

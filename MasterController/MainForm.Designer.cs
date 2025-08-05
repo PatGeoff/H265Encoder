@@ -13,7 +13,6 @@ namespace MasterController
 
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             panel1 = new System.Windows.Forms.Panel();
             button3 = new System.Windows.Forms.Button();
@@ -26,6 +25,9 @@ namespace MasterController
             Panel_Encodage = new System.Windows.Forms.Panel();
             borderlessTabControl1 = new BorderlessTabControl();
             tabPage_Encode = new System.Windows.Forms.TabPage();
+            tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
+            btn_StartAll = new System.Windows.Forms.Button();
+            btn_StopAll = new System.Windows.Forms.Button();
             flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             lbl_imageNameFormatted = new System.Windows.Forms.Label();
@@ -45,12 +47,13 @@ namespace MasterController
             label5 = new System.Windows.Forms.Label();
             btn_ChooseDestination = new System.Windows.Forms.Button();
             textBox_DestinationPath = new System.Windows.Forms.TextBox();
+            btn_SeeFolder = new System.Windows.Forms.Button();
             tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             label10 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
             label8 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
-            comboBox_FFDepth = new System.Windows.Forms.ComboBox();
+            comboBox_FFProfile = new System.Windows.Forms.ComboBox();
             comboBox_FFRes = new System.Windows.Forms.ComboBox();
             comboBox_FFFramerate = new System.Windows.Forms.ComboBox();
             comboBox_FFBitrate = new System.Windows.Forms.ComboBox();
@@ -87,13 +90,13 @@ namespace MasterController
             btn_SendMessage = new System.Windows.Forms.Button();
             button6 = new System.Windows.Forms.Button();
             flowLayoutPanel_SlaveList = new System.Windows.Forms.FlowLayoutPanel();
-            toolTip_Editffmpeg = new System.Windows.Forms.ToolTip(components);
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             Panel_Encodage.SuspendLayout();
             borderlessTabControl1.SuspendLayout();
             tabPage_Encode.SuspendLayout();
+            tableLayoutPanel12.SuspendLayout();
             flowLayoutPanel3.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel5.SuspendLayout();
@@ -253,6 +256,7 @@ namespace MasterController
             // tabPage_Encode
             // 
             tabPage_Encode.BackColor = System.Drawing.Color.FromArgb(40, 40, 40);
+            tabPage_Encode.Controls.Add(tableLayoutPanel12);
             tabPage_Encode.Controls.Add(flowLayoutPanel3);
             tabPage_Encode.Controls.Add(flowLayoutPanel_SlaveStatus);
             tabPage_Encode.Location = new System.Drawing.Point(4, 5);
@@ -261,6 +265,47 @@ namespace MasterController
             tabPage_Encode.Size = new System.Drawing.Size(1136, 785);
             tabPage_Encode.TabIndex = 0;
             tabPage_Encode.Text = "tabPage1";
+            // 
+            // tableLayoutPanel12
+            // 
+            tableLayoutPanel12.ColumnCount = 3;
+            tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            tableLayoutPanel12.Controls.Add(btn_StartAll, 1, 0);
+            tableLayoutPanel12.Controls.Add(btn_StopAll, 2, 0);
+            tableLayoutPanel12.Location = new System.Drawing.Point(6, 746);
+            tableLayoutPanel12.Name = "tableLayoutPanel12";
+            tableLayoutPanel12.RowCount = 1;
+            tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel12.Size = new System.Drawing.Size(1122, 33);
+            tableLayoutPanel12.TabIndex = 10;
+            // 
+            // btn_StartAll
+            // 
+            btn_StartAll.Dock = System.Windows.Forms.DockStyle.Fill;
+            btn_StartAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btn_StartAll.ForeColor = System.Drawing.Color.White;
+            btn_StartAll.Location = new System.Drawing.Point(925, 3);
+            btn_StartAll.Name = "btn_StartAll";
+            btn_StartAll.Size = new System.Drawing.Size(94, 27);
+            btn_StartAll.TabIndex = 5;
+            btn_StartAll.Text = "Tout Lancer";
+            btn_StartAll.UseVisualStyleBackColor = true;
+            btn_StartAll.Click += btn_StartAll_Click;
+            // 
+            // btn_StopAll
+            // 
+            btn_StopAll.Dock = System.Windows.Forms.DockStyle.Fill;
+            btn_StopAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btn_StopAll.ForeColor = System.Drawing.Color.White;
+            btn_StopAll.Location = new System.Drawing.Point(1025, 3);
+            btn_StopAll.Name = "btn_StopAll";
+            btn_StopAll.Size = new System.Drawing.Size(94, 27);
+            btn_StopAll.TabIndex = 6;
+            btn_StopAll.Text = "Tout Arrêter";
+            btn_StopAll.UseVisualStyleBackColor = true;
+            btn_StopAll.Click += btn_StopAll_Click;
             // 
             // flowLayoutPanel3
             // 
@@ -485,26 +530,19 @@ namespace MasterController
             // tableLayoutPanel4
             // 
             tableLayoutPanel4.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            tableLayoutPanel4.ColumnCount = 3;
+            tableLayoutPanel4.ColumnCount = 4;
             tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
             tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 71F));
             tableLayoutPanel4.Controls.Add(label5, 1, 0);
             tableLayoutPanel4.Controls.Add(btn_ChooseDestination, 0, 0);
             tableLayoutPanel4.Controls.Add(textBox_DestinationPath, 2, 0);
+            tableLayoutPanel4.Controls.Add(btn_SeeFolder, 3, 0);
             tableLayoutPanel4.Location = new System.Drawing.Point(3, 77);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
             tableLayoutPanel4.RowCount = 1;
             tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel4.Size = new System.Drawing.Size(1115, 31);
             tableLayoutPanel4.TabIndex = 2;
             // 
@@ -542,13 +580,22 @@ namespace MasterController
             textBox_DestinationPath.Dock = System.Windows.Forms.DockStyle.Fill;
             textBox_DestinationPath.ForeColor = System.Drawing.Color.White;
             textBox_DestinationPath.Location = new System.Drawing.Point(130, 4);
-            textBox_DestinationPath.Multiline = true;
             textBox_DestinationPath.Name = "textBox_DestinationPath";
-            textBox_DestinationPath.Size = new System.Drawing.Size(981, 23);
+            textBox_DestinationPath.ReadOnly = true;
+            textBox_DestinationPath.Size = new System.Drawing.Size(909, 16);
             textBox_DestinationPath.TabIndex = 3;
-            textBox_DestinationPath.Text = "lbl_DestinationPath";
-            textBox_DestinationPath.KeyDown += textBox_DestinationPath_KeyDown;
-            textBox_DestinationPath.Leave += textBox_DestinationPath_Leave;
+            // 
+            // btn_SeeFolder
+            // 
+            btn_SeeFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btn_SeeFolder.ForeColor = System.Drawing.Color.White;
+            btn_SeeFolder.Location = new System.Drawing.Point(1046, 4);
+            btn_SeeFolder.Name = "btn_SeeFolder";
+            btn_SeeFolder.Size = new System.Drawing.Size(65, 23);
+            btn_SeeFolder.TabIndex = 4;
+            btn_SeeFolder.Text = "Voir";
+            btn_SeeFolder.UseVisualStyleBackColor = true;
+            btn_SeeFolder.Click += btn_SeeFolder_Click;
             // 
             // tableLayoutPanel10
             // 
@@ -561,13 +608,15 @@ namespace MasterController
             tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 134F));
             tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel10.Controls.Add(label10, 6, 0);
             tableLayoutPanel10.Controls.Add(label9, 4, 0);
             tableLayoutPanel10.Controls.Add(label8, 2, 0);
             tableLayoutPanel10.Controls.Add(label6, 0, 0);
-            tableLayoutPanel10.Controls.Add(comboBox_FFDepth, 7, 0);
+            tableLayoutPanel10.Controls.Add(comboBox_FFProfile, 7, 0);
             tableLayoutPanel10.Controls.Add(comboBox_FFRes, 5, 0);
             tableLayoutPanel10.Controls.Add(comboBox_FFFramerate, 3, 0);
             tableLayoutPanel10.Controls.Add(comboBox_FFBitrate, 1, 0);
@@ -630,19 +679,20 @@ namespace MasterController
             label6.Text = "Bitrate";
             label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // comboBox_FFDepth
+            // comboBox_FFProfile
             // 
-            comboBox_FFDepth.AutoCompleteCustomSource.AddRange(new string[] { "8 bit", "10 bit" });
-            comboBox_FFDepth.BackColor = System.Drawing.Color.FromArgb(40, 40, 40);
-            comboBox_FFDepth.ForeColor = System.Drawing.Color.White;
-            comboBox_FFDepth.FormattingEnabled = true;
-            comboBox_FFDepth.Items.AddRange(new object[] { "8 bit", "10 bit" });
-            comboBox_FFDepth.Location = new System.Drawing.Point(631, 4);
-            comboBox_FFDepth.Name = "comboBox_FFDepth";
-            comboBox_FFDepth.Size = new System.Drawing.Size(94, 23);
-            comboBox_FFDepth.TabIndex = 3;
-            comboBox_FFDepth.Text = "Profondeur";
-            comboBox_FFDepth.SelectedIndexChanged += comboBox_FFDepth_SelectedIndexChanged;
+            comboBox_FFProfile.AutoCompleteCustomSource.AddRange(new string[] { "8 bit", "10 bit" });
+            comboBox_FFProfile.BackColor = System.Drawing.Color.FromArgb(40, 40, 40);
+            comboBox_FFProfile.Dock = System.Windows.Forms.DockStyle.Fill;
+            comboBox_FFProfile.ForeColor = System.Drawing.Color.White;
+            comboBox_FFProfile.FormattingEnabled = true;
+            comboBox_FFProfile.Items.AddRange(new object[] { "8   bit     4:2:0", "10 bit     4:2:0  <--", "8   bit     4:2:2 (nd)", "10 bit     4:2:2 (nd)", "8   bit     4:4:4 (nd)", "10 bit     4:4:4 (nd)" });
+            comboBox_FFProfile.Location = new System.Drawing.Point(631, 4);
+            comboBox_FFProfile.Name = "comboBox_FFProfile";
+            comboBox_FFProfile.Size = new System.Drawing.Size(128, 23);
+            comboBox_FFProfile.TabIndex = 3;
+            comboBox_FFProfile.Text = "Profondeur";
+            comboBox_FFProfile.SelectedIndexChanged += comboBox_FFDepth_SelectedIndexChanged;
             // 
             // comboBox_FFRes
             // 
@@ -688,9 +738,9 @@ namespace MasterController
             flowLayoutPanel_SlaveStatus.AutoScroll = true;
             flowLayoutPanel_SlaveStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             flowLayoutPanel_SlaveStatus.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            flowLayoutPanel_SlaveStatus.Location = new System.Drawing.Point(6, 230);
+            flowLayoutPanel_SlaveStatus.Location = new System.Drawing.Point(6, 205);
             flowLayoutPanel_SlaveStatus.Name = "flowLayoutPanel_SlaveStatus";
-            flowLayoutPanel_SlaveStatus.Size = new System.Drawing.Size(1122, 547);
+            flowLayoutPanel_SlaveStatus.Size = new System.Drawing.Size(1122, 535);
             flowLayoutPanel_SlaveStatus.TabIndex = 0;
             flowLayoutPanel_SlaveStatus.WrapContents = false;
             // 
@@ -720,8 +770,8 @@ namespace MasterController
             tableLayoutPanel8.RowCount = 5;
             tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 58F));
             tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.51095F));
-            tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.48905F));
+            tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.1941452F));
+            tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.8058548F));
             tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             tableLayoutPanel8.Size = new System.Drawing.Size(1130, 779);
             tableLayoutPanel8.TabIndex = 1;
@@ -763,7 +813,7 @@ namespace MasterController
             listBox_ConcatSource.ItemHeight = 15;
             listBox_ConcatSource.Location = new System.Drawing.Point(3, 97);
             listBox_ConcatSource.Name = "listBox_ConcatSource";
-            listBox_ConcatSource.Size = new System.Drawing.Size(1124, 322);
+            listBox_ConcatSource.Size = new System.Drawing.Size(1124, 164);
             listBox_ConcatSource.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -915,10 +965,10 @@ namespace MasterController
             textBox_FFmpegConcatOutput.BorderStyle = System.Windows.Forms.BorderStyle.None;
             textBox_FFmpegConcatOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             textBox_FFmpegConcatOutput.ForeColor = System.Drawing.Color.White;
-            textBox_FFmpegConcatOutput.Location = new System.Drawing.Point(3, 425);
+            textBox_FFmpegConcatOutput.Location = new System.Drawing.Point(3, 267);
             textBox_FFmpegConcatOutput.Multiline = true;
             textBox_FFmpegConcatOutput.Name = "textBox_FFmpegConcatOutput";
-            textBox_FFmpegConcatOutput.Size = new System.Drawing.Size(1124, 315);
+            textBox_FFmpegConcatOutput.Size = new System.Drawing.Size(1124, 473);
             textBox_FFmpegConcatOutput.TabIndex = 5;
             // 
             // tabPage_Réglages
@@ -1070,18 +1120,18 @@ namespace MasterController
             listBox1.ForeColor = System.Drawing.Color.White;
             listBox1.FormattingEnabled = true;
             listBox1.ItemHeight = 15;
-            listBox1.Location = new System.Drawing.Point(817, 61);
+            listBox1.Location = new System.Drawing.Point(734, 58);
             listBox1.Name = "listBox1";
-            listBox1.Size = new System.Drawing.Size(185, 214);
+            listBox1.Size = new System.Drawing.Size(396, 109);
             listBox1.TabIndex = 5;
             // 
             // panel3
             // 
             panel3.Controls.Add(textBox_messageToSend);
             panel3.Controls.Add(btn_SendMessage);
-            panel3.Location = new System.Drawing.Point(818, 6);
+            panel3.Location = new System.Drawing.Point(733, 6);
             panel3.Name = "panel3";
-            panel3.Size = new System.Drawing.Size(184, 49);
+            panel3.Size = new System.Drawing.Size(395, 49);
             panel3.TabIndex = 4;
             // 
             // textBox_messageToSend
@@ -1091,7 +1141,7 @@ namespace MasterController
             textBox_messageToSend.ForeColor = System.Drawing.Color.White;
             textBox_messageToSend.Location = new System.Drawing.Point(0, 23);
             textBox_messageToSend.Name = "textBox_messageToSend";
-            textBox_messageToSend.Size = new System.Drawing.Size(184, 23);
+            textBox_messageToSend.Size = new System.Drawing.Size(395, 23);
             textBox_messageToSend.TabIndex = 3;
             // 
             // btn_SendMessage
@@ -1099,7 +1149,7 @@ namespace MasterController
             btn_SendMessage.Dock = System.Windows.Forms.DockStyle.Top;
             btn_SendMessage.Location = new System.Drawing.Point(0, 0);
             btn_SendMessage.Name = "btn_SendMessage";
-            btn_SendMessage.Size = new System.Drawing.Size(184, 23);
+            btn_SendMessage.Size = new System.Drawing.Size(395, 23);
             btn_SendMessage.TabIndex = 4;
             btn_SendMessage.Text = "Envoyer le message";
             btn_SendMessage.UseVisualStyleBackColor = true;
@@ -1142,6 +1192,7 @@ namespace MasterController
             Panel_Encodage.ResumeLayout(false);
             borderlessTabControl1.ResumeLayout(false);
             tabPage_Encode.ResumeLayout(false);
+            tableLayoutPanel12.ResumeLayout(false);
             flowLayoutPanel3.ResumeLayout(false);
             flowLayoutPanel3.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
@@ -1204,7 +1255,6 @@ namespace MasterController
         private System.Windows.Forms.Button btn_ChooseDestination;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.TextBox textBox_NbrImages;
-        private System.Windows.Forms.ToolTip toolTip_Editffmpeg;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button btn_autoSplit;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
@@ -1213,7 +1263,6 @@ namespace MasterController
         private System.Windows.Forms.TextBox textBox_FFMPEGpath;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lbl_imageNameFormatted;
-        private System.Windows.Forms.TextBox textBox_DestinationPath;
         private System.Windows.Forms.TextBox textBox_dernierFrame;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.TextBox textBox_premierFrame;
@@ -1235,7 +1284,7 @@ namespace MasterController
         private System.Windows.Forms.TextBox textBox_FFmpegConcatOutput;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
-        private System.Windows.Forms.ComboBox comboBox_FFDepth;
+        private System.Windows.Forms.ComboBox comboBox_FFProfile;
         private System.Windows.Forms.ComboBox comboBox_FFRes;
         private System.Windows.Forms.ComboBox comboBox_FFFramerate;
         private System.Windows.Forms.ComboBox comboBox_FFBitrate;
@@ -1243,5 +1292,10 @@ namespace MasterController
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox_DestinationPath;
+        private System.Windows.Forms.Button btn_SeeFolder;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
+        private System.Windows.Forms.Button btn_StartAll;
+        private System.Windows.Forms.Button btn_StopAll;
     }
 }

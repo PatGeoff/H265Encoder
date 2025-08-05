@@ -5,7 +5,7 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>MasterController</RootNamespace>
-    <AssemblyName>H265 Encodeur Master</AssemblyName>
+    <AssemblyName>MasterController</AssemblyName>
     <ApplicationIcon>myResources\images\logoMaster.ico</ApplicationIcon>
   </PropertyGroup>
 

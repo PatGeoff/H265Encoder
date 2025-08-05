@@ -17,6 +17,34 @@
 \\Mac\Home\Downloads\MasterController 2\obj\Debug\net8.0-windows\MasterController.SlaveWidget.resources
 \\Mac\Home\Downloads\MasterController 2\obj\Debug\net8.0-windows\MasterController.csproj.GenerateResource.cache
 \\Mac\Home\Downloads\MasterController 2\obj\Debug\net8.0-windows\MasterController.Properties.Resources.resources
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\bin\Debug\net8.0-windows\H265 Encodeur Master.exe
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\bin\Debug\net8.0-windows\H265 Encodeur Master.deps.json
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\bin\Debug\net8.0-windows\H265 Encodeur Master.runtimeconfig.json
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\bin\Debug\net8.0-windows\H265 Encodeur Master.dll
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\bin\Debug\net8.0-windows\H265 Encodeur Master.pdb
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.FFMPEGEditor.resources
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.MainForm.resources
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.Properties.Resources.resources
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.SlaveEditorForm.resources
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.SlaveWidget.resources
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.SlaveWidgetStatus.resources
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.csproj.GenerateResource.cache
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.AssemblyInfoInputs.cache
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.AssemblyInfo.cs
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.csproj.CoreCompileInputs.cache
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.sourcelink.json
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\H265 Encodeur Master.dll
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\refint\H265 Encodeur Master.dll
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\H265 Encodeur Master.pdb
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\MasterController.genruntimeconfig.cache
+C:\Users\tech\source\repos\H265RenderDistributor\MasterEncoder\obj\Debug\net8.0-windows\ref\H265 Encodeur Master.dll
+C:\Users\tech\source\repos\H265RenderDistributor\MasterController\bin\Debug\net8.0-windows\MasterController.exe
+C:\Users\tech\source\repos\H265RenderDistributor\MasterController\bin\Debug\net8.0-windows\MasterController.deps.json
+C:\Users\tech\source\repos\H265RenderDistributor\MasterController\bin\Debug\net8.0-windows\MasterController.runtimeconfig.json
+C:\Users\tech\source\repos\H265RenderDistributor\MasterController\bin\Debug\net8.0-windows\MasterController.dll
+C:\Users\tech\source\repos\H265RenderDistributor\MasterController\bin\Debug\net8.0-windows\MasterController.pdb
+C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.FFMPEGEditor.resources
 C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.MainForm.resources
 C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.Properties.Resources.resources
 C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.SlaveEditorForm.resources
@@ -28,14 +56,8 @@ C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8
 C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.AssemblyInfo.cs
 C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.csproj.CoreCompileInputs.cache
 C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.sourcelink.json
+C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.dll
+C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\refint\MasterController.dll
+C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.pdb
 C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.genruntimeconfig.cache
-C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\MasterController.FFMPEGEditor.resources
-C:\Users\tech\source\repos\H265RenderDistributor\MasterController\bin\Debug\net8.0-windows\H265 Encodeur Master.exe
-C:\Users\tech\source\repos\H265RenderDistributor\MasterController\bin\Debug\net8.0-windows\H265 Encodeur Master.deps.json
-C:\Users\tech\source\repos\H265RenderDistributor\MasterController\bin\Debug\net8.0-windows\H265 Encodeur Master.runtimeconfig.json
-C:\Users\tech\source\repos\H265RenderDistributor\MasterController\bin\Debug\net8.0-windows\H265 Encodeur Master.dll
-C:\Users\tech\source\repos\H265RenderDistributor\MasterController\bin\Debug\net8.0-windows\H265 Encodeur Master.pdb
-C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\H265 Encodeur Master.dll
-C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\refint\H265 Encodeur Master.dll
-C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\H265 Encodeur Master.pdb
-C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\ref\H265 Encodeur Master.dll
+C:\Users\tech\source\repos\H265RenderDistributor\MasterController\obj\Debug\net8.0-windows\ref\MasterController.dll

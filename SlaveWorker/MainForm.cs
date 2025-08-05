@@ -128,6 +128,8 @@ namespace SlaveWorker
                         if (!IsClientConnected(stream))
                         {
                             AppendText("Connexion perdue. Arrêt du processus FFmpeg.");
+                            //byte[] data = Encoding.UTF8.GetBytes("Arrêt du processus FFmpeg");
+                            //stream.Write(data);
                             try { currentProcess.Kill(); } catch { }
                             break;
                         }

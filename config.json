@@ -1,0 +1,14 @@
+{
+  "DestinationPath": "\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane",
+  "DestinationName": "config.mp4",
+  "SourceImagePath": "\\\\FREENASPOLARIS\\PolarisTech\\Dark_Universe\\Images Source\\darkuniverse_colo",
+  "ImageName": "DU_Col_V2_4k_%05d.png",
+  "FFMPEGPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe",
+  "FFMPEGPresetsPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\ffmpegpresets",
+  "FFMPEGPreset": "Base",
+  "FFframeRate": 30,
+  "FFBitrate": 80,
+  "FFResolution": "4096:4096",
+  "FFFormat": "yuv420p10le",
+  "FFProfile": "main10"
+}

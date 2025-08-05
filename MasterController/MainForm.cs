@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
@@ -22,21 +23,27 @@ namespace MasterController
     public partial class MainForm : Form
     {
         public static List<SlaveConfig> slaves = new();
+        public static List<SlaveWidgetStatus> slaveWidgetStatusList = new();
         private List<string> ConcatList = new List<string>();
 
         private string configPath = "config.json";
+        public string slavePath = "slaves_config.json";
         public string ffmpegCommmand;
         private Process ffmpegProcess;
 
 
         private AppSettings settings;
 
-        private Dictionary<string, SlaveWidget> widgetMap = new();
-        private Dictionary<string, SlaveWidgetStatus> widgetStatusMap = new();
+        private readonly DateTime _startTime = DateTime.Now;
+
+
+        //private Dictionary<string, SlaveWidget> widgetMap = new();
+        // private Dictionary<string, SlaveWidgetStatus> widgetStatusMap = new();
         private System.Windows.Forms.Timer refreshTimer;
 
         public MainForm()
         {
+
             InitializeComponent();
             settings = new AppSettings(configPath);
             LoadSettings();
@@ -45,6 +52,7 @@ namespace MasterController
             InitializeWidgets();
             StartRefreshTimer();
             SetDropDownMenus();
+            SetUnselectBoxes();
         }
 
 
@@ -64,15 +72,25 @@ namespace MasterController
                    SaveSlaves();
                };
 
-                widgetMap[slave.Name] = widget;
+                // widgetMap[slave.Name] = widget;
                 flowLayoutPanel_SlaveList.Controls.Add(widget);
             }
             foreach (var slave in slaves.OrderBy(s => s.Name))
             {
                 var widget = new SlaveWidgetStatus(slave, settings);
                 flowLayoutPanel_SlaveStatus.Controls.Add(widget);
-
+                slaveWidgetStatusList.Add(widget);
             }
+
+            TimeSpan elapsed = DateTime.Now - _startTime;
+            Debug.WriteLine($"Temps d'exécution : {elapsed}");
+
+            //foreach (var widget in slaveWidgetStatusList)
+            //{
+            //    widget.UpdateDisplay();
+            //}
+            //elapsed = DateTime.Now - _startTime;
+            //Debug.WriteLine($"Temps d'exécution après : {elapsed}");
             Task.Run(() => RefreshSlaveStatusesAsync());
         }
 
@@ -109,6 +127,18 @@ namespace MasterController
             refreshTimer.Start();
         }
 
+        private void SetUnselectBoxes()
+        {
+            comboBox_FFBitrate.SelectionStart = 0;
+            comboBox_FFBitrate.SelectionLength = 0;
+            comboBox_FFProfile.SelectionStart = 0;
+            comboBox_FFProfile.SelectionLength = 0;
+            comboBox_FFFramerate.SelectionStart = 0;
+            comboBox_FFFramerate.SelectionLength = 0;
+            comboBox_FFRes.SelectionStart = 0;
+            comboBox_FFRes.SelectionLength = 0;
+        }
+
         private async Task RefreshSlaveStatusesAsync()
         {
             var tasks = slaves.Select(async slave =>
@@ -119,14 +149,12 @@ namespace MasterController
 
             await Task.WhenAll(tasks);
 
-            foreach (SlaveWidget widget in flowLayoutPanel_SlaveList.Controls)
-            {
-                widget.UpdateDisplay(); // uses the bound SlaveConfig
-            }
+           
+            
             foreach (var slave in slaves)
             {
 
-                slave.Utiliser = slave.NetworkStatus;
+                //slave.Utiliser = slave.NetworkStatus;
                 var name = slave.Name;
 
                 var controlToUpdate = flowLayoutPanel_SlaveStatus.Controls
@@ -141,6 +169,15 @@ namespace MasterController
             }
             var selectedBlades = slaves.OrderBy(s => s.Name).Where(blade => blade.Utiliser).ToList();
             textBox_autoSplitNbr.Text = selectedBlades.Count.ToString();
+            foreach (SlaveWidgetStatus widget in slaveWidgetStatusList)
+            {
+                widget.UpdateDisplay();
+            }
+            foreach (SlaveWidget widget in flowLayoutPanel_SlaveList.Controls)
+            {
+                widget.UpdateDisplay(); // uses the bound SlaveConfig
+            }
+           
         }
 
         private bool IsSocketConnected(string ip, int port)
@@ -172,9 +209,10 @@ namespace MasterController
         private void SetDropDownMenus()
         {
             comboBox_FFBitrate.SelectedIndex = 2;
-            comboBox_FFDepth.SelectedIndex = 1;
+            comboBox_FFProfile.SelectedIndex = 1;
             comboBox_FFFramerate.SelectedIndex = 0;
             comboBox_FFRes.SelectedIndex = 3;
+
         }
 
         private async void btn_SendMessage_Click(object sender, EventArgs e)
@@ -421,33 +459,7 @@ namespace MasterController
             }
         }
 
-        public AppSettings LoadSettings()
-        {
-            settings.Load();
 
-            if (settings != null)
-            {
-                //if (!string.IsNullOrEmpty(settings.SourceImagePath))
-                //{
-                //    lbl_SourceImagePath.Text = settings.SourceImagePath;
-                //}
-
-                if (!string.IsNullOrEmpty(settings.DestinationPath))
-                {
-                    if (!string.IsNullOrEmpty(settings.DestinationName))
-                    {
-                        textBox_DestinationPath.Text = settings.DestinationPath + "\\" + settings.DestinationName;
-                    }
-                    else { textBox_DestinationPath.Text = settings.DestinationPath; }
-
-                }
-
-                if (!string.IsNullOrEmpty(settings.FFMPEGPath))
-                    textBox_FFMPEGpath.Text = settings.FFMPEGPath;
-            }
-
-            return settings;
-        }
 
         private void btn_FFMPEGPath_Click(object sender, EventArgs e)
         {
@@ -518,6 +530,8 @@ namespace MasterController
 
         private void btn_autoSplit_Click(object sender, EventArgs e)
         {
+            int compte = 0;
+
             if (!int.TryParse(textBox_premierFrame.Text, out int firstFrame) ||
                 !int.TryParse(textBox_dernierFrame.Text, out int lastFrame))
             {
@@ -527,8 +541,11 @@ namespace MasterController
 
             int totalImages = lastFrame - firstFrame + 1;
 
-            var selectedBlades = slaves.OrderBy(s => s.Name).Where(blade => blade.Utiliser).ToList();
-            int bladeCount = selectedBlades.Count;
+            //var selectedBlades = slaves.OrderBy(s => s.Name).Where(blade => blade.Utiliser).ToList();
+            //int bladeCount = selectedBlades.Count;
+
+            int bladeCount = slaveWidgetStatusList.Count(item => item.UtiliserChecked);
+
 
             if (bladeCount == 0)
             {
@@ -541,16 +558,24 @@ namespace MasterController
 
             int currentStart = firstFrame;
 
-            for (int i = 0; i < bladeCount; i++)
+          
+            int i = 0;
+            foreach (var widget in slaveWidgetStatusList)
             {
-                int imagesForThisBlade = baseCount + (i == bladeCount - 1 ? remainder : 0);
-                int currentEnd = currentStart + imagesForThisBlade - 1;
+                if (widget.UtiliserChecked)
+                {
+                    int imagesForThisBlade = baseCount + (i == bladeCount - 1 ? remainder : 0);
+                    int currentEnd = currentStart + imagesForThisBlade - 1;
 
-                selectedBlades[i].StartFrame = currentStart;
-                selectedBlades[i].EndFrame = currentEnd;
-                selectedBlades[i].FrameCount = imagesForThisBlade;
-                selectedBlades[i].Part = i;
-                currentStart = currentEnd + 1;
+                    widget._slave.StartFrame = currentStart;
+                    widget._slave.EndFrame = currentEnd;
+                    widget._slave.FrameCount = imagesForThisBlade;
+                    widget._slave.Part = i;
+                    currentStart = currentEnd + 1;
+                    widget.SetSuffixNbr();
+                   
+                }
+                i ++;
             }
 
         }
@@ -583,7 +608,7 @@ namespace MasterController
 
         private void SaveOutputDestinationPath()
         {
-            settings.DestinationPath = textBox_DestinationPath.Text;
+            settings.DestinationPath = Path.GetFullPath(textBox_DestinationPath.Text);
             settings.Save();
         }
 
@@ -652,7 +677,7 @@ namespace MasterController
                 }
             }
 
-            // Prepare FFmpeg process
+            // Prepare FFmpeg processqui
             ProcessStartInfo psi = new ProcessStartInfo
             {
                 FileName = ffmpegPath,
@@ -733,7 +758,6 @@ namespace MasterController
             }
 
         }
-
 
 
         private void btn_selectVideos_Click(object sender, EventArgs e)
@@ -826,17 +850,124 @@ namespace MasterController
 
         private void comboBox_FFDepth_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox_FFDepth.SelectedIndex == 0)
+            switch (comboBox_FFProfile.SelectedIndex)
             {
-                settings.FFFormat = "yuv420p";
-                settings.FFProfile = "main";
+                case 0: // 4:2:0 - 8 bits
+
+                    settings.FFProfile = "-pix_fmt yuv420p -profile:v main";
+                    break;
+
+                case 1: // 4:2:0 - 10 bits
+                    settings.FFProfile = "-pix_fmt yuv420p10le -profile:v main10";
+                    break;
+
+                case 2: // 4:2:2 - 8 bits
+                    comboBox_FFProfile.SelectedIndex = 1;
+                    break;
+                //    settings.FFProfile = "-pix_fmt yuv422p -profile:v main422";
+                //    break;
+
+                case 3: // 4:2:2 - 10 bits
+                    comboBox_FFProfile.SelectedIndex = 1;
+                    break;
+                //    settings.FFProfile = "-pix_fmt yuv422p10le -profile:v main422-10";
+                //    break;
+
+                case 4: // 4:4:4 - 8 bits
+                    comboBox_FFProfile.SelectedIndex = 1;
+                    break;
+                //    settings.FFProfile = "-pix_fmt yuv444p -profile:v main444";
+                //    break;
+
+                case 5: // 4:4:4 - 10 bits
+                    comboBox_FFProfile.SelectedIndex = 1;
+                    break;
+                //    settings.FFProfile = "-pix_fmt yuv444p10le -profile:v main444-10";
+                //    break;
+                default:
+
+                    break;
+
             }
-            else if (comboBox_FFDepth.SelectedIndex == 1)
-            {
-                settings.FFFormat = "yuv420p10le";
-                settings.FFProfile = "main10";
-            }           
         }
+        public AppSettings LoadSettings()
+        {
+
+            if (!File.Exists(configPath))
+            {
+                File.WriteAllText(configPath, "{}"); // Creates an empty JSON object
+            }
+
+
+            settings.Load();
+
+            if (settings != null)
+            {
+                //if (!string.IsNullOrEmpty(settings.SourceImagePath))
+                //{
+                //    lbl_SourceImagePath.Text = settings.SourceImagePath;
+                //}
+
+                if (!string.IsNullOrEmpty(settings.DestinationPath))
+                {
+                    if (!string.IsNullOrEmpty(settings.DestinationName))
+                    {
+                        textBox_DestinationPath.Text = settings.DestinationPath + "\\" + settings.DestinationName;
+                    }
+                    else { textBox_DestinationPath.Text = settings.DestinationPath; }
+
+                }
+
+                if (!string.IsNullOrEmpty(settings.FFMPEGPath))
+                    textBox_FFMPEGpath.Text = settings.FFMPEGPath;
+            }
+
+            return settings;
+        }
+
+        private void btn_SeeFolder_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string folderPath = settings.DestinationPath;
+                if (Directory.Exists(folderPath))
+                {
+                    System.Diagnostics.Process.Start("explorer.exe", folderPath);
+                }
+                else
+                {
+                    MessageBox.Show("Le dossier spécifié est introuvable.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de l'ouverture du dossier : " + ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void btn_StartAll_Click(object sender, EventArgs e)
+        {
+            foreach (var widget in slaveWidgetStatusList)
+            {
+                if (widget.UtiliserChecked)
+                {
+                    widget.StartSlaveJob();
+                }
+            }
+        }
+
+        private void btn_StopAll_Click(object sender, EventArgs e)
+        {
+            foreach (var widget in slaveWidgetStatusList)
+            {
+                if (widget.UtiliserChecked)
+                {
+                    widget.CancelSlaveJob();
+                }
+            }
+        }
+
     }
 
     public class AppSettings
@@ -866,6 +997,8 @@ namespace MasterController
         public string FFResolution { get; set; }
         public string FFFormat { get; set; }
         public string FFProfile { get; set; }
+        public string FFChroma {  get; set; }
+
         public void Save()
         {
             string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
@@ -888,8 +1021,7 @@ namespace MasterController
                 FFframeRate = 30;
                 FFBitrate = 60;
                 FFResolution = "6144:6144";
-                FFFormat = "yuv420p10le";
-                FFProfile = "main10";
+                FFProfile = "-pix_fmt yuv420p10le -profile:v main10";
             }
         }
 

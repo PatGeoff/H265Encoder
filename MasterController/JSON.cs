@@ -15,10 +15,14 @@ namespace MasterController
         {
             try
             {
-                if (File.Exists("slaves_config.json"))
+                if (File.Exists(slavePath))
                 {
-                    string json = File.ReadAllText("slaves_config.json");
-                    slaves = JsonSerializer.Deserialize<List<SlaveConfig>>(json);                    
+                    string json = File.ReadAllText(slavePath);
+                    slaves = JsonSerializer.Deserialize<List<SlaveConfig>>(json);
+                }
+                else
+                {
+                    File.WriteAllText(slavePath, "{}"); // Creates an empty JSON object
                 }
                 
             }

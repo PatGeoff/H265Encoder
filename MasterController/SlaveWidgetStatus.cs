@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,8 +16,11 @@ namespace MasterController
     public partial class SlaveWidgetStatus : UserControl
     {
         public event EventHandler DeleteRequested;
-        private SlaveConfig _slave;
+        public SlaveConfig _slave;
         private AppSettings _settings;
+        private CancellationTokenSource _cancellationTokenSource;
+        private bool _isJobRunning = false;
+
 
         public SlaveWidgetStatus(SlaveConfig slave, AppSettings settings)
         {
@@ -30,39 +34,75 @@ namespace MasterController
             SetFFMPEGCommand();
             UpdateDisplay();
         }
+
+        public void SetSuffixNbr()
+        {
+            if (checkBox_Utiliser.Checked)
+            {
+                string nomImage = _settings.DestinationName;
+                string extension = Path.GetExtension(nomImage);
+                string baseName = Path.GetFileNameWithoutExtension(nomImage);
+                string destinationFolder = _settings.DestinationPath;
+                string[] existingFiles = Array.Empty<string>();
+                try
+                {
+                    existingFiles = Directory.GetFiles(destinationFolder, $"{baseName}_*.{extension.TrimStart('.')}");
+                }
+                catch (Exception)
+                {
+
+                }
+
+
+                int maxIndex = -1;
+
+                if (existingFiles.Length != 0)
+                {
+                    foreach (var file in existingFiles)
+                    {
+                        string fileName = Path.GetFileNameWithoutExtension(file);
+                        string suffix = fileName.Substring(baseName.Length + 1);
+                        if (int.TryParse(suffix, out int index))
+                        {
+                            if (index > maxIndex)
+                                maxIndex = index;
+                        }
+                    }
+                }
+                int indexInList = MainForm.slaveWidgetStatusList.FindIndex(widget => widget.UtiliserChecked == true);               
+                int nextIndex = maxIndex + 1 + indexInList;
+
+                textBox_SeqNbr.Text = nextIndex.ToString();
+            }
+        }
+
         public void SetFFMPEGCommand()
         {
-
+            SetSuffixNbr();
             string nomImage = _settings.DestinationName;
+            string extension = Path.GetExtension(nomImage);
+            string baseName = Path.GetFileNameWithoutExtension(nomImage);
+            string destinationFolder = _settings.DestinationPath;
+            string index = textBox_SeqNbr.Text;
 
-            if (nomImage.Contains("."))
-            {
-                string[] noms = nomImage.Split('.');
-                nomImage = $"{noms[0]}_{_slave.Part}.{noms[1]}";
-            }
-
+            string finalName = $"{baseName}_{index}{extension}";
 
             string inputPath = Path.Combine(
-     _settings.SourceImagePath.TrimEnd('\\'),
-     _settings.ImageName.TrimStart('\\')
- );
+                _settings.SourceImagePath.TrimEnd('\\'),
+                _settings.ImageName.TrimStart('\\')
+            );
 
             var sb = new StringBuilder();
             sb.AppendFormat("\"{0}\" -r {1} ", _settings.FFMPEGPath, _settings.FFframeRate);
             sb.AppendFormat("-start_number {0} ", _slave.StartFrame);
             sb.AppendFormat("-i \"{0}\" ", inputPath);
             sb.AppendFormat("-frames:v {0} ", _slave.FrameCount);
-
             sb.AppendFormat("-b:v {0}M -maxrate {0}M -minrate {0}M -bufsize {0}M ", _settings.FFBitrate);
-            sb.AppendFormat("-vf scale=5948:5948 -c:v libx265 -pix_fmt {0} -profile:v {1} ", _settings.FFFormat, _settings.FFProfile);
+            sb.AppendFormat("-vf scale={0} -c:v libx265 {1} ", _settings.FFResolution, _settings.FFProfile);
             sb.Append("-threads 72 -x265-params \"pools=2:frame-threads=16:wpp=1\" -y ");
-            sb.AppendFormat("\"{0}\"", Path.Combine(_settings.DestinationPath, nomImage));
-
-
+            sb.AppendFormat("\"{0}\"", Path.Combine(destinationFolder, finalName));
             _slave.FFMPEGCommand = sb.ToString();
-
         }
-
 
         private void Config_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -79,7 +119,6 @@ namespace MasterController
             set => checkBox_Utiliser.Checked = value;
         }
 
-
         public void UpdateDisplay()
         {
             lbl_BladeName.Text = _slave.Name;
@@ -89,57 +128,78 @@ namespace MasterController
             textBox_EndFrame.Text = _slave.EndFrame.ToString();
         }
 
-
-        private void btn_deleteBlade_Click(object sender, EventArgs e)
-        {
-            this.Parent?.Controls.Remove(this);
-            DeleteRequested?.Invoke(this, EventArgs.Empty);
-        }
-
         private void checkBox_Utiliser_CheckedChanged(object sender, EventArgs e)
         {
             if (_slave.NetworkStatus)
             {
                 _slave.Utiliser = checkBox_Utiliser.Checked;
+                
             }
             else
             {
                 checkBox_Utiliser.Checked = false;
+               
+            }
+            if (checkBox_Utiliser.Checked)
+            {
+                lbl_BladeName.ForeColor = Color.White;
+            }
+            else
+            {
+                lbl_BladeName.ForeColor = Color.DarkRed;
             }
 
         }
 
         private void btn_StartSlaveJob_Click(object sender, EventArgs e)
-        {            
-            Task.Run(() => StartSlaveJob());
+        {
+            if (_isJobRunning)
+            {
+                CancelSlaveJob();
+                btn_StartSlaveJob.Text = "Lancer";
+            }
+            else
+            {
+                StartSlaveJob();
+                btn_StartSlaveJob.Text = "Arrêter";
+            }
         }
 
-        private async void StartSlaveJob()
+        public void StartSlaveJob()
         {
-            
+            if (_isJobRunning)
+                return;
+
+            _cancellationTokenSource = new CancellationTokenSource();
+            _isJobRunning = true;
+
+            Task.Run(() => StartSlaveJob(_cancellationTokenSource.Token));
+        }
+
+        public void CancelSlaveJob()
+        {
+            if (_isJobRunning && _cancellationTokenSource != null)
+            {
+                _cancellationTokenSource.Cancel();
+                _isJobRunning = false;
+            }
+        }
+
+
+        public async void StartSlaveJob(CancellationToken token)
+        {
             SetFFMPEGCommand();
             try
             {
                 using (TcpClient client = new TcpClient())
                 {
-                    try
-                    {
-                        await client.ConnectAsync(_slave.Ip, _slave.Port);
-                        //MessageBox.Show("Connection successful!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Connection failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    await client.ConnectAsync(_slave.Ip, _slave.Port);
 
                     using (NetworkStream stream = client.GetStream())
                     {
-                        // Send the command
                         byte[] commandBytes = Encoding.UTF8.GetBytes("StartJob " + _slave.FFMPEGCommand + "\n");
-                        //byte[] commandBytes = Encoding.UTF8.GetBytes("Allo\n");
-                        await stream.WriteAsync(commandBytes, 0, commandBytes.Length);
+                        await stream.WriteAsync(commandBytes, 0, commandBytes.Length, token);
 
-                        // Read the response
                         using (var reader = new StreamReader(stream, Encoding.UTF8))
                         {
                             string line;
@@ -147,17 +207,24 @@ namespace MasterController
 
                             while ((line = await reader.ReadLineAsync()) != null)
                             {
+                                if (token.IsCancellationRequested)
+                                {
+                                    break;
+                                }
+
                                 lastLine = line;
                                 if (lastLine.Contains("frame"))
                                 {
                                     string ligne = lastLine.Split("fps")[0];
-                                    lastLine = ligne + " / " + _slave.FrameCount; 
-
+                                    lastLine = ligne + " / " + _slave.FrameCount;
                                 }
-                               
-                                    lbl_ffFeedback.Invoke((MethodInvoker)(() => lbl_ffFeedback.Text = lastLine));
-                                
-                               
+                                //if (lastLine.Contains("perdue."))
+                                //{
+                                //    string ligne = lastLine.Split("perdue.")[1];
+                                //    lastLine = ligne;
+                                //}
+
+                                lbl_ffFeedback.Invoke((MethodInvoker)(() => lbl_ffFeedback.Text = lastLine));
                             }
                         }
                     }
@@ -165,10 +232,17 @@ namespace MasterController
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error communicating with slave: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Handle exceptions if needed
+            }
+            finally
+            {
+                if (!token.IsCancellationRequested)
+                {
+                    btn_StartSlaveJob.Invoke((MethodInvoker)(() => btn_StartSlaveJob.Text = "Lancer"));
+                    _isJobRunning = false;
+                }
             }
         }
-
 
         private void btn_EditFFmpegCommand_Click(object sender, EventArgs e)
         {

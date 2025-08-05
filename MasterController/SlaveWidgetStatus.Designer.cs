@@ -40,24 +40,30 @@
             textBox_StartFrame = new System.Windows.Forms.TextBox();
             btn_StartSlaveJob = new System.Windows.Forms.Button();
             btn_EditFFmpegCommand = new System.Windows.Forms.Button();
+            label3 = new System.Windows.Forms.Label();
+            textBox_SeqNbr = new System.Windows.Forms.TextBox();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            tableLayoutPanel1.ColumnCount = 10;
+            tableLayoutPanel1.ColumnCount = 12;
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 153F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 68F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 41F));
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            tableLayoutPanel1.Controls.Add(lbl_ffFeedback, 8, 0);
+            tableLayoutPanel1.Controls.Add(textBox_SeqNbr, 8, 0);
+            tableLayoutPanel1.Controls.Add(label3, 7, 0);
+            tableLayoutPanel1.Controls.Add(lbl_ffFeedback, 10, 0);
             tableLayoutPanel1.Controls.Add(textBox_EndFrame, 6, 0);
             tableLayoutPanel1.Controls.Add(checkBox_Utiliser, 0, 0);
             tableLayoutPanel1.Controls.Add(lbl_BladeName, 1, 0);
@@ -65,8 +71,8 @@
             tableLayoutPanel1.Controls.Add(label1, 3, 0);
             tableLayoutPanel1.Controls.Add(label2, 5, 0);
             tableLayoutPanel1.Controls.Add(textBox_StartFrame, 4, 0);
-            tableLayoutPanel1.Controls.Add(btn_StartSlaveJob, 9, 0);
-            tableLayoutPanel1.Controls.Add(btn_EditFFmpegCommand, 7, 0);
+            tableLayoutPanel1.Controls.Add(btn_StartSlaveJob, 11, 0);
+            tableLayoutPanel1.Controls.Add(btn_EditFFmpegCommand, 9, 0);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -80,9 +86,9 @@
             lbl_ffFeedback.AutoSize = true;
             lbl_ffFeedback.Dock = System.Windows.Forms.DockStyle.Fill;
             lbl_ffFeedback.ForeColor = System.Drawing.Color.White;
-            lbl_ffFeedback.Location = new System.Drawing.Point(786, 1);
+            lbl_ffFeedback.Location = new System.Drawing.Point(798, 1);
             lbl_ffFeedback.Name = "lbl_ffFeedback";
-            lbl_ffFeedback.Size = new System.Drawing.Size(223, 29);
+            lbl_ffFeedback.Size = new System.Drawing.Size(211, 29);
             lbl_ffFeedback.TabIndex = 9;
             lbl_ffFeedback.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -92,10 +98,10 @@
             textBox_EndFrame.BorderStyle = System.Windows.Forms.BorderStyle.None;
             textBox_EndFrame.Dock = System.Windows.Forms.DockStyle.Fill;
             textBox_EndFrame.ForeColor = System.Drawing.Color.White;
-            textBox_EndFrame.Location = new System.Drawing.Point(531, 4);
+            textBox_EndFrame.Location = new System.Drawing.Point(464, 4);
             textBox_EndFrame.Multiline = true;
             textBox_EndFrame.Name = "textBox_EndFrame";
-            textBox_EndFrame.Size = new System.Drawing.Size(94, 23);
+            textBox_EndFrame.Size = new System.Drawing.Size(77, 23);
             textBox_EndFrame.TabIndex = 6;
             textBox_EndFrame.Text = "0";
             textBox_EndFrame.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -144,7 +150,7 @@
             label1.ForeColor = System.Drawing.Color.White;
             label1.Location = new System.Drawing.Point(228, 1);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(94, 29);
+            label1.Size = new System.Drawing.Size(79, 29);
             label1.TabIndex = 3;
             label1.Text = "Frame départ";
             label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -154,9 +160,9 @@
             label2.AutoSize = true;
             label2.Dock = System.Windows.Forms.DockStyle.Fill;
             label2.ForeColor = System.Drawing.Color.White;
-            label2.Location = new System.Drawing.Point(430, 1);
+            label2.Location = new System.Drawing.Point(395, 1);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(94, 29);
+            label2.Size = new System.Drawing.Size(62, 29);
             label2.TabIndex = 4;
             label2.Text = "Frame Fin";
             label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -167,10 +173,10 @@
             textBox_StartFrame.BorderStyle = System.Windows.Forms.BorderStyle.None;
             textBox_StartFrame.Dock = System.Windows.Forms.DockStyle.Fill;
             textBox_StartFrame.ForeColor = System.Drawing.Color.White;
-            textBox_StartFrame.Location = new System.Drawing.Point(329, 4);
+            textBox_StartFrame.Location = new System.Drawing.Point(314, 4);
             textBox_StartFrame.Multiline = true;
             textBox_StartFrame.Name = "textBox_StartFrame";
-            textBox_StartFrame.Size = new System.Drawing.Size(94, 23);
+            textBox_StartFrame.Size = new System.Drawing.Size(74, 23);
             textBox_StartFrame.TabIndex = 5;
             textBox_StartFrame.Text = "0";
             textBox_StartFrame.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -199,7 +205,7 @@
             btn_EditFFmpegCommand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btn_EditFFmpegCommand.ForeColor = System.Drawing.Color.White;
             btn_EditFFmpegCommand.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            btn_EditFFmpegCommand.Location = new System.Drawing.Point(632, 4);
+            btn_EditFFmpegCommand.Location = new System.Drawing.Point(641, 4);
             btn_EditFFmpegCommand.Name = "btn_EditFFmpegCommand";
             btn_EditFFmpegCommand.Size = new System.Drawing.Size(147, 23);
             btn_EditFFmpegCommand.TabIndex = 8;
@@ -208,6 +214,32 @@
             btn_EditFFmpegCommand.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             btn_EditFFmpegCommand.UseVisualStyleBackColor = true;
             btn_EditFFmpegCommand.Click += btn_EditFFmpegCommand_Click;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            label3.ForeColor = System.Drawing.Color.White;
+            label3.Location = new System.Drawing.Point(548, 1);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(44, 29);
+            label3.TabIndex = 10;
+            label3.Text = "# séq.";
+            label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBox_SeqNbr
+            // 
+            textBox_SeqNbr.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            textBox_SeqNbr.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            textBox_SeqNbr.Dock = System.Windows.Forms.DockStyle.Fill;
+            textBox_SeqNbr.ForeColor = System.Drawing.Color.White;
+            textBox_SeqNbr.Location = new System.Drawing.Point(599, 4);
+            textBox_SeqNbr.Multiline = true;
+            textBox_SeqNbr.Name = "textBox_SeqNbr";
+            textBox_SeqNbr.Size = new System.Drawing.Size(35, 23);
+            textBox_SeqNbr.TabIndex = 11;
+            textBox_SeqNbr.Text = "0";
+            textBox_SeqNbr.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // SlaveWidgetStatus
             // 
@@ -235,5 +267,7 @@
         private System.Windows.Forms.Button btn_StartSlaveJob;
         private System.Windows.Forms.Button btn_EditFFmpegCommand;
         private System.Windows.Forms.Label lbl_ffFeedback;
+        private System.Windows.Forms.TextBox textBox_SeqNbr;
+        private System.Windows.Forms.Label label3;
     }
 }

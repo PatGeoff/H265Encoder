@@ -1,14 +1,15 @@
 {
-  "DestinationPath": "\\\\FREENASPOLARIS\\PolarisProd\\PatG\\Auriane",
-  "DestinationName": "config.mp4",
-  "SourceImagePath": "\\\\FREENASPOLARIS\\PolarisTech\\Dark_Universe\\Images Source\\darkuniverse_colo",
-  "ImageName": "DU_Col_V2_4k_%05d.png",
-  "FFMPEGPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\FFMPEG.new\\ffmpeg.exe",
+  "DestinationPath": "\\\\FREENASPOLARIS\\PolarisTech\\Monde de glace\\H265\\PreConcat\\444",
+  "DestinationName": "MDG_6K_60fps_100mbps_444_10bit.mp4",
+  "SourceImagePath": "\\\\FREENASPOLARIS\\PolarisTech\\Monde de glace\\DPX Finaux 1 juin 2022\\WorldsOfIce_EN_220421_6K_60fps",
+  "ImageName": "WorldsOfIce_EN_220421_6K_60fps_%08d.dpx",
+  "FFMPEGPath": "C:\\Users\\skyvision\\Desktop\\H265 Encoder\\FFMPEG.new\\ffmpeg.exe",
   "FFMPEGPresetsPath": "C:\\Users\\tech\\source\\repos\\H265RenderDistributor\\ffmpegpresets",
   "FFMPEGPreset": "Base",
   "FFframeRate": 30,
   "FFBitrate": 80,
   "FFResolution": "4096:4096",
-  "FFFormat": "yuv420p10le",
-  "FFProfile": "main10"
+  "FFFormat": null,
+  "FFProfile": "-pix_fmt yuv420p10le -profile:v main10",
+  "FFChroma": null
 }

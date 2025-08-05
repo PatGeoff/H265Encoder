@@ -58,7 +58,7 @@ namespace MasterController
 
         private void hScrollBar1_ValueChanged(object sender, EventArgs e)
         {
-            lbl_instances.Text= hScrollBar1.Value.ToString();
+            lbl_instances.Text = hScrollBar1.Value.ToString();
         }
     }
 }
