@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("H265 Encodeur Slave")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+912051851b16ef28dee17ccbc3830d723c5218c2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e224efd01a61b443668d824efa9e3eba9b970bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("H265 Encodeur Slave")]
 [assembly: System.Reflection.AssemblyTitleAttribute("H265 Encodeur Slave")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

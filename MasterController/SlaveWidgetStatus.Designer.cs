@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SlaveWidgetStatus));
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            textBox_SeqNbr = new System.Windows.Forms.TextBox();
+            label3 = new System.Windows.Forms.Label();
             lbl_ffFeedback = new System.Windows.Forms.Label();
             textBox_EndFrame = new System.Windows.Forms.TextBox();
             checkBox_Utiliser = new System.Windows.Forms.CheckBox();
@@ -40,8 +42,6 @@
             textBox_StartFrame = new System.Windows.Forms.TextBox();
             btn_StartSlaveJob = new System.Windows.Forms.Button();
             btn_EditFFmpegCommand = new System.Windows.Forms.Button();
-            label3 = new System.Windows.Forms.Label();
-            textBox_SeqNbr = new System.Windows.Forms.TextBox();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -78,8 +78,34 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new System.Drawing.Size(1114, 31);
+            tableLayoutPanel1.Size = new System.Drawing.Size(1093, 31);
             tableLayoutPanel1.TabIndex = 0;
+            // 
+            // textBox_SeqNbr
+            // 
+            textBox_SeqNbr.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            textBox_SeqNbr.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            textBox_SeqNbr.Dock = System.Windows.Forms.DockStyle.Fill;
+            textBox_SeqNbr.ForeColor = System.Drawing.Color.White;
+            textBox_SeqNbr.Location = new System.Drawing.Point(599, 4);
+            textBox_SeqNbr.Multiline = true;
+            textBox_SeqNbr.Name = "textBox_SeqNbr";
+            textBox_SeqNbr.Size = new System.Drawing.Size(35, 23);
+            textBox_SeqNbr.TabIndex = 11;
+            textBox_SeqNbr.Text = "0";
+            textBox_SeqNbr.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            label3.ForeColor = System.Drawing.Color.White;
+            label3.Location = new System.Drawing.Point(548, 1);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(44, 29);
+            label3.TabIndex = 10;
+            label3.Text = "# séq.";
+            label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lbl_ffFeedback
             // 
@@ -88,7 +114,7 @@
             lbl_ffFeedback.ForeColor = System.Drawing.Color.White;
             lbl_ffFeedback.Location = new System.Drawing.Point(798, 1);
             lbl_ffFeedback.Name = "lbl_ffFeedback";
-            lbl_ffFeedback.Size = new System.Drawing.Size(211, 29);
+            lbl_ffFeedback.Size = new System.Drawing.Size(190, 29);
             lbl_ffFeedback.TabIndex = 9;
             lbl_ffFeedback.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -189,7 +215,7 @@
             btn_StartSlaveJob.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btn_StartSlaveJob.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             btn_StartSlaveJob.ForeColor = System.Drawing.Color.White;
-            btn_StartSlaveJob.Location = new System.Drawing.Point(1016, 4);
+            btn_StartSlaveJob.Location = new System.Drawing.Point(995, 4);
             btn_StartSlaveJob.Name = "btn_StartSlaveJob";
             btn_StartSlaveJob.Size = new System.Drawing.Size(94, 23);
             btn_StartSlaveJob.TabIndex = 7;
@@ -215,32 +241,6 @@
             btn_EditFFmpegCommand.UseVisualStyleBackColor = true;
             btn_EditFFmpegCommand.Click += btn_EditFFmpegCommand_Click;
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            label3.ForeColor = System.Drawing.Color.White;
-            label3.Location = new System.Drawing.Point(548, 1);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(44, 29);
-            label3.TabIndex = 10;
-            label3.Text = "# séq.";
-            label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // textBox_SeqNbr
-            // 
-            textBox_SeqNbr.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
-            textBox_SeqNbr.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            textBox_SeqNbr.Dock = System.Windows.Forms.DockStyle.Fill;
-            textBox_SeqNbr.ForeColor = System.Drawing.Color.White;
-            textBox_SeqNbr.Location = new System.Drawing.Point(599, 4);
-            textBox_SeqNbr.Multiline = true;
-            textBox_SeqNbr.Name = "textBox_SeqNbr";
-            textBox_SeqNbr.Size = new System.Drawing.Size(35, 23);
-            textBox_SeqNbr.TabIndex = 11;
-            textBox_SeqNbr.Text = "0";
-            textBox_SeqNbr.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // SlaveWidgetStatus
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -248,7 +248,7 @@
             BackColor = System.Drawing.Color.FromArgb(40, 40, 40);
             Controls.Add(tableLayoutPanel1);
             Name = "SlaveWidgetStatus";
-            Size = new System.Drawing.Size(1114, 31);
+            Size = new System.Drawing.Size(1093, 31);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);

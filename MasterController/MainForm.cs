@@ -53,23 +53,27 @@ namespace MasterController
             StartRefreshTimer();
             SetDropDownMenus();
             SetUnselectBoxes();
+            SetCheckedBoxes();
+            UpdateNumberBlades();
         }
 
 
-        private void InitializeWidgets()
+        public void InitializeWidgets()
         {
             flowLayoutPanel_SlaveList.Controls.Clear();
             flowLayoutPanel_SlaveStatus.Controls.Clear();
+
             foreach (var slave in slaves.OrderBy(s => s.Name))
             {
 
-                var widget = new SlaveWidget(slave);
+                var widget = new SlaveWidget(slave, this);
                 widget.WidgetActionTriggered += Widget_Deleted;
                 widget.DeleteRequested += (s, e) =>
                {
                    flowLayoutPanel_SlaveList.Controls.Remove(widget);
                    slaves.RemoveAll(sl => sl.Name == slave.Name);
                    SaveSlaves();
+
                };
 
                 // widgetMap[slave.Name] = widget;
@@ -77,20 +81,42 @@ namespace MasterController
             }
             foreach (var slave in slaves.OrderBy(s => s.Name))
             {
-                var widget = new SlaveWidgetStatus(slave, settings);
-                flowLayoutPanel_SlaveStatus.Controls.Add(widget);
-                slaveWidgetStatusList.Add(widget);
+                Debug.WriteLine(slave.Instances);
+                for (var i = 0; i < slave.Instances; i++)
+                {
+                    var widget = new SlaveWidgetStatus(slave, settings, this);
+                    flowLayoutPanel_SlaveStatus.Controls.Add(widget);
+                    slaveWidgetStatusList.Add(widget);
+                }
             }
 
-            TimeSpan elapsed = DateTime.Now - _startTime;
-            Debug.WriteLine($"Temps d'exécution : {elapsed}");
+            Task.Run(() => RefreshSlaveStatusesAsync());
+        }
 
-            //foreach (var widget in slaveWidgetStatusList)
-            //{
-            //    widget.UpdateDisplay();
-            //}
-            //elapsed = DateTime.Now - _startTime;
-            //Debug.WriteLine($"Temps d'exécution après : {elapsed}");
+        public void SetCheckedBoxes()
+        {
+            foreach (SlaveWidgetStatus slave in slaveWidgetStatusList)
+            {
+                var name = slave.Name;
+                slave.UtiliserChecked = slave._slave.NetworkStatus;
+                slave.SetNameColor();
+                slave.UpdateDisplay();
+            }
+        }
+        public void AddSlaveInstances()
+        {
+            flowLayoutPanel_SlaveStatus.Controls.Clear();
+            slaveWidgetStatusList.Clear();
+            foreach (var slave in slaves.OrderBy(s => s.Name))
+            {
+                for (var i = 0; i < slave.Instances; i++)
+                {
+                    var widget = new SlaveWidgetStatus(slave, settings, this);
+                    flowLayoutPanel_SlaveStatus.Controls.Add(widget);
+                    slaveWidgetStatusList.Add(widget);
+                    widget.UtiliserChecked = true;
+                }
+            }
             Task.Run(() => RefreshSlaveStatusesAsync());
         }
 
@@ -139,36 +165,27 @@ namespace MasterController
             comboBox_FFRes.SelectionLength = 0;
         }
 
-        private async Task RefreshSlaveStatusesAsync()
+        public async Task RefreshSlaveStatusesAsync()
         {
             var tasks = slaves.Select(async slave =>
             {
-                bool online = await Task.Run(() => IsSocketConnected(slave.Ip, slave.Port));
+                bool online = await IsSocketConnectedAsync(slave.Ip, slave.Port);
+
                 slave.NetworkStatus = online;
             });
 
             await Task.WhenAll(tasks);
 
-           
-            
-            foreach (var slave in slaves)
+
+            foreach (SlaveWidgetStatus slave in slaveWidgetStatusList)
             {
-
-                //slave.Utiliser = slave.NetworkStatus;
                 var name = slave.Name;
-
-                var controlToUpdate = flowLayoutPanel_SlaveStatus.Controls
-                    .OfType<SlaveWidgetStatus>()
-                    .FirstOrDefault(c => c.Name == name);
-
-                if (controlToUpdate != null)
-                {
-                    controlToUpdate.UtiliserChecked = slave.Utiliser;
-
-                }
+                if (!slave._slave.NetworkStatus)
+                { slave.UtiliserChecked = false; }
             }
-            var selectedBlades = slaves.OrderBy(s => s.Name).Where(blade => blade.Utiliser).ToList();
-            textBox_autoSplitNbr.Text = selectedBlades.Count.ToString();
+
+            UpdateNumberBlades();
+
             foreach (SlaveWidgetStatus widget in slaveWidgetStatusList)
             {
                 widget.UpdateDisplay();
@@ -177,23 +194,32 @@ namespace MasterController
             {
                 widget.UpdateDisplay(); // uses the bound SlaveConfig
             }
-           
+
         }
 
-        private bool IsSocketConnected(string ip, int port)
+        public void UpdateNumberBlades()
+        {
+            var selectedBlades = slaveWidgetStatusList.OrderBy(s => s.Name).Where(blade => blade.UtiliserChecked).ToList();
+            textBox_autoSplitNbr.Text = selectedBlades.Count.ToString();
+        }
+
+        private async Task<bool> IsSocketConnectedAsync(string ip, int port)
         {
             try
             {
                 using TcpClient client = new();
-                var result = client.BeginConnect(ip, port, null, null);
-                bool success = result.AsyncWaitHandle.WaitOne(TimeSpan.FromMilliseconds(500));
-                return success && client.Connected;
+                var connectTask = client.ConnectAsync(ip, port);
+                var timeoutTask = Task.Delay(500);
+
+                var completedTask = await Task.WhenAny(connectTask, timeoutTask);
+                return completedTask == connectTask && client.Connected;
             }
             catch
             {
                 return false;
             }
         }
+
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
@@ -331,7 +357,7 @@ namespace MasterController
                 lbl_SourceImagePath.Text = folderPath;
                 settings.Save();
                 textBox_NbrImages.ForeColor = Color.Red;
-                textBox_NbrImages.Text = "Calcul en cours";
+                textBox_NbrImages.Text = "Calcul";
 
                 // Trouver le premier frame et le dernier frame
                 await Task.Run(() =>
@@ -373,12 +399,17 @@ namespace MasterController
                 });
 
                 await Task.Run(async () => await CalculateImageNumber(folderPath, fileName));
+
+                foreach (var widget in slaveWidgetStatusList)
+                {
+                    widget.ClearFFConsole();
+                    widget.ResetButtonText();
+                }
             }
         }
 
         private async Task CalculateImageNumber(string folderPath, string fileName)
         {
-
 
             int count = await Task.Run(() =>
             {
@@ -459,8 +490,6 @@ namespace MasterController
             }
         }
 
-
-
         private void btn_FFMPEGPath_Click(object sender, EventArgs e)
         {
 
@@ -528,24 +557,123 @@ namespace MasterController
             //settings.FFMPEGPreset = comboBox_ffPresets.SelectedItem.ToString();
         }
 
+        public void SetButtonColor()
+        {
+            btn_autoSplit.BackColor = Color.FromArgb(255, 40, 40, 40);
+            btn_autoSplit.Text = "Auto Split";
+        }
+
+        //private void btn_autoSplit_Click(object sender, EventArgs e)
+        //{
+        //    btn_autoSplit.Text = "Calcul";
+        //    btn_autoSplit.BackColor = Color.DarkRed;
+
+        //    if (!int.TryParse(textBox_premierFrame.Text, out int firstFrame) ||
+        //        !int.TryParse(textBox_dernierFrame.Text, out int lastFrame))
+        //    {
+        //        MessageBox.Show("Veuillez entrer des valeurs valides pour le premier et le dernier frame.");
+        //        return;
+        //    }
+
+        //    int totalImages = lastFrame - firstFrame + 1;
+
+        //    var selectedWidgets = slaveWidgetStatusList.Where(w => w.UtiliserChecked).ToList();
+        //    int bladeCount = selectedWidgets.Count;
+
+        //    if (bladeCount == 0)
+        //    {
+        //        MessageBox.Show("Aucune blade sélectionnée.");
+        //        return;
+        //    }
+
+        //    int baseCount = totalImages / bladeCount;
+        //    int remainder = totalImages % bladeCount;
+        //    int currentStart = firstFrame;
+
+        //    for (int i = 0; i < selectedWidgets.Count; i++)
+        //    {
+        //        var widget = selectedWidgets[i];
+        //        int extra = remainder > 0 ? 1 : 0;
+        //        int imagesForThisBlade = baseCount + extra;
+        //        if (remainder > 0) remainder--;
+
+        //        int currentEnd = currentStart + imagesForThisBlade - 1;
+
+        //        widget.startFrame = currentStart;
+        //        widget.endFrame = currentEnd;
+        //        widget.frameCount = imagesForThisBlade;
+        //        widget._slave.Part = i;
+        //        currentStart = currentEnd + 1;
+        //    }
+
+        //   // GetSuffixNbr();
+        //}
+
+        //private void btn_autoSplit_Click(object sender, EventArgs e)
+        //{
+        //    btn_autoSplit.Text = "Calcul";
+        //    btn_autoSplit.BackColor = Color.DarkRed;
+
+        //    if (!int.TryParse(textBox_premierFrame.Text, out int firstFrame) ||
+        //        !int.TryParse(textBox_dernierFrame.Text, out int lastFrame))
+        //    {
+        //        MessageBox.Show("Veuillez entrer des valeurs valides pour le premier et le dernier frame.");
+        //        return;
+        //    }
+
+        //    int totalImages = lastFrame - firstFrame + 1;
+        //    var selectedWidgets = slaveWidgetStatusList.Where(w => w.UtiliserChecked).ToArray();
+        //    int bladeCount = selectedWidgets.Length;
+
+        //    if (bladeCount == 0)
+        //    {
+        //        MessageBox.Show("Aucune blade sélectionnée.");
+        //        return;
+        //    }
+
+        //    int baseCount = totalImages / bladeCount;
+        //    int remainder = totalImages % bladeCount;
+        //    int currentStart = firstFrame;
+
+        //    for (int i = 0; i < bladeCount; i++)
+        //    {
+        //        int imagesForThisBlade = baseCount + (remainder-- > 0 ? 1 : 0);
+        //        int currentEnd = currentStart + imagesForThisBlade - 1;
+
+        //        var widget = selectedWidgets[i];
+        //        widget.startFrame = currentStart;
+        //        widget.endFrame = currentEnd;
+        //        widget.frameCount = imagesForThisBlade;
+        //        widget._slave.Part = i;
+
+        //        currentStart = currentEnd + 1;
+        //    }
+
+        //    // Optional: GetSuffixNbr();
+        //}
+
         private void btn_autoSplit_Click(object sender, EventArgs e)
         {
-            int compte = 0;
-
+            btn_autoSplit.Text = "Calcul";
+            btn_autoSplit.BackColor = Color.DarkRed;
             if (!int.TryParse(textBox_premierFrame.Text, out int firstFrame) ||
-                !int.TryParse(textBox_dernierFrame.Text, out int lastFrame))
+               !int.TryParse(textBox_dernierFrame.Text, out int lastFrame))
             {
                 MessageBox.Show("Veuillez entrer des valeurs valides pour le premier et le dernier frame.");
                 return;
             }
+             Task.Run(()  => performSplitCalculations(firstFrame, lastFrame));
+
+            GetSuffixNbr();
+        }
+
+        private async Task performSplitCalculations(int firstFrame, int lastFrame)
+        {
+                      
 
             int totalImages = lastFrame - firstFrame + 1;
-
-            //var selectedBlades = slaves.OrderBy(s => s.Name).Where(blade => blade.Utiliser).ToList();
-            //int bladeCount = selectedBlades.Count;
-
-            int bladeCount = slaveWidgetStatusList.Count(item => item.UtiliserChecked);
-
+            var selectedWidgets = slaveWidgetStatusList.Where(w => w.UtiliserChecked).ToArray();
+            int bladeCount = selectedWidgets.Length;
 
             if (bladeCount == 0)
             {
@@ -555,35 +683,73 @@ namespace MasterController
 
             int baseCount = totalImages / bladeCount;
             int remainder = totalImages % bladeCount;
-
             int currentStart = firstFrame;
 
-          
-            int i = 0;
-            foreach (var widget in slaveWidgetStatusList)
+            for (int i = 0; i < bladeCount; i++)
             {
-                if (widget.UtiliserChecked)
-                {
-                    int imagesForThisBlade = baseCount + (i == bladeCount - 1 ? remainder : 0);
-                    int currentEnd = currentStart + imagesForThisBlade - 1;
+                int imagesForThisBlade = baseCount + (remainder-- > 0 ? 1 : 0);
+                int currentEnd = currentStart + imagesForThisBlade - 1;
 
-                    widget._slave.StartFrame = currentStart;
-                    widget._slave.EndFrame = currentEnd;
-                    widget._slave.FrameCount = imagesForThisBlade;
-                    widget._slave.Part = i;
-                    currentStart = currentEnd + 1;
-                    widget.SetSuffixNbr();
-                   
-                }
-                i ++;
+                var widget = selectedWidgets[i];
+                widget.startFrame = currentStart;
+                widget.endFrame = currentEnd;
+                widget.frameCount = imagesForThisBlade;
+                widget._slave.Part = i;
+
+                currentStart = currentEnd + 1;
             }
+        }
+
+        private void GetSuffixNbr()
+        {
+            string nomImage = settings.DestinationName;
+            string extension = Path.GetExtension(nomImage);
+            string baseName = Path.GetFileNameWithoutExtension(nomImage);
+            string destinationFolder = settings.DestinationPath;
+
+            string[] existingFiles = Array.Empty<string>();
+            try
+            {
+                existingFiles = Directory.GetFiles(destinationFolder, $"{baseName}_*.{extension.TrimStart('.')}");
+            }
+            catch (Exception) { }
+
+            int maxIndex = -1;
+            foreach (var file in existingFiles)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(file);
+                string suffix = fileName.Substring(baseName.Length + 1);
+                if (int.TryParse(suffix, out int index))
+                {
+                    if (index > maxIndex)
+                        maxIndex = index;
+                }
+            }
+
+            // Ensuite, dans ta boucle :
+            int indexInList = 0;
+            foreach (var widget in slaveWidgetStatusList.Where(blade => blade.UtiliserChecked))
+            {
+                widget.SetSuffixNbr(existingFiles, maxIndex, indexInList);
+                indexInList++;
+            }
+            Task.Delay(400);
 
         }
 
         private void SetFFMPEGPath()
         {
-            settings.FFMPEGPath = textBox_FFMPEGpath.Text;
-            settings.Save();
+            string path = textBox_FFMPEGpath.Text;
+
+            if (Uri.TryCreate(path, UriKind.Absolute, out Uri uriResult) && uriResult.IsUnc)
+            {
+                settings.FFMPEGPath = path;
+                settings.Save();
+            }
+            else
+            {
+                MessageBox.Show("Le chemin spécifié n'est pas un chemin UNC valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void textBox_FFMPEGpath_MouseLeave(object sender, EventArgs e)
@@ -652,8 +818,6 @@ namespace MasterController
                 }
             }
         }
-
-
 
         private async void btn_StartConcat_Click(object sender, EventArgs e)
         {
@@ -758,7 +922,6 @@ namespace MasterController
             }
 
         }
-
 
         private void btn_selectVideos_Click(object sender, EventArgs e)
         {
@@ -954,6 +1117,7 @@ namespace MasterController
                 {
                     widget.StartSlaveJob();
                 }
+                Task.Delay(1500);
             }
         }
 
@@ -964,17 +1128,19 @@ namespace MasterController
                 if (widget.UtiliserChecked)
                 {
                     widget.CancelSlaveJob();
+                    widget.ResetButtonText();
                 }
             }
         }
 
     }
 
-    public class AppSettings
+    public class AppSettings : INotifyPropertyChanged
     {
         [JsonIgnore]
         private string _filePath;
 
+        public event PropertyChangedEventHandler PropertyChanged;
         public AppSettings()
         {
 
@@ -985,19 +1151,117 @@ namespace MasterController
             _filePath = filepath;
         }
 
-        public string DestinationPath { get; set; }
-        public string DestinationName { get; set; }
-        public string SourceImagePath { get; set; }
-        public string ImageName { get; set; }
-        public string FFMPEGPath { get; set; }
-        public string FFMPEGPresetsPath {  get; set; }
-        public string FFMPEGPreset {  get; set; }
-        public int FFframeRate  { get; set; }
-        public int FFBitrate    { get; set; }   
-        public string FFResolution { get; set; }
+        private string _destinationPath;
+        public string DestinationPath
+        {
+            get => _destinationPath;
+            set
+            {
+                if (_destinationPath != value)
+                {
+                    _destinationPath = value;
+                    OnPropertyChanged(nameof(DestinationPath));
+                }
+            }
+        }
+        private string _destinationName;
+        public string DestinationName
+        {
+            get => _destinationName;
+            set
+            {
+                if (_destinationName != value)
+                {
+                    _destinationName = value;
+                    OnPropertyChanged(nameof(DestinationName));
+                }
+            }
+        }
+        private string _sourceImagePath;
+        public string SourceImagePath
+        {
+            get => _sourceImagePath;
+            set
+            {
+                if (_sourceImagePath != value)
+                {
+                    _sourceImagePath = value;
+                    OnPropertyChanged(nameof(SourceImagePath));
+                }
+            }
+        }
+        private string _imageName;
+        public string ImageName
+        {
+            get => _imageName;
+            set
+            {
+                if (_imageName != value)
+                {
+                    _imageName = value;
+                    OnPropertyChanged(nameof(ImageName));
+                }
+            }
+        }
+        private string _ffmpegPath;
+        public string FFMPEGPath
+        {
+            get => _ffmpegPath;
+            set
+            {
+                if (_ffmpegPath != value)
+                {
+                    _ffmpegPath = value;
+                    OnPropertyChanged(nameof(FFMPEGPath));
+                }
+            }
+        }
+        public string FFMPEGPresetsPath { get; set; }
+        public string FFMPEGPreset { get; set; }
+
+        private int _ffFrameRate;
+        public int FFframeRate
+        {
+            get => _ffFrameRate;
+            set
+            {
+                if (_ffFrameRate != value)
+                {
+                    _ffFrameRate = value;
+                    OnPropertyChanged(nameof(FFframeRate));
+                }
+            }
+        }
+
+        private int _ffBitrate;
+        public int FFBitrate
+        {
+            get => _ffBitrate;
+            set
+            {
+                if (_ffBitrate != value)
+                {
+                    _ffBitrate = value;
+                    OnPropertyChanged(nameof(FFBitrate));
+                }
+            }
+        }
+        private string _ffResolution;
+        public string FFResolution
+        {
+            get => _ffResolution;
+            set
+            {
+                if (_ffResolution != value)
+                {
+                    _ffResolution = value;
+                    OnPropertyChanged(nameof(FFResolution));
+                }
+            }
+        }
         public string FFFormat { get; set; }
         public string FFProfile { get; set; }
-        public string FFChroma {  get; set; }
+        public string FFChroma { get; set; }
 
         public void Save()
         {
@@ -1017,12 +1281,17 @@ namespace MasterController
                 ImageName = loaded.ImageName;
                 FFMPEGPath = loaded.FFMPEGPath;
                 FFMPEGPreset = loaded.FFMPEGPreset;
-                FFMPEGPresetsPath = loaded.FFMPEGPresetsPath;   
+                FFMPEGPresetsPath = loaded.FFMPEGPresetsPath;
                 FFframeRate = 30;
                 FFBitrate = 60;
                 FFResolution = "6144:6144";
                 FFProfile = "-pix_fmt yuv420p10le -profile:v main10";
             }
+        }
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }
@@ -1041,9 +1310,11 @@ namespace MasterController
         public string Name { get; set; }
         public string Ip { get; set; }
         public int Port { get; set; }
-        
-        public int Part {  get; set; }
-       
+
+        public int Instances { get; set; }
+
+        public int Part { get; set; }
+
         private bool _networkStatus;
         public bool NetworkStatus
         {
@@ -1058,19 +1329,6 @@ namespace MasterController
             }
         }
 
-        private bool _utiliser;
-        public bool Utiliser
-        {
-            get => _utiliser;
-            set
-            {
-                if (_utiliser != value)
-                {
-                    _utiliser = value;
-                    OnPropertyChanged(nameof(Utiliser));
-                }
-            }
-        }
 
         public int _startFrame { get; set; }
 
@@ -1120,8 +1378,8 @@ namespace MasterController
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }      
-    }  
+        }
+    }
 
     public class BorderlessTabControl : TabControl
     {

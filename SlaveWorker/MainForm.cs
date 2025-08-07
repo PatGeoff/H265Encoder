@@ -59,6 +59,14 @@ namespace SlaveWorker
                                 commande = command.Split("StartJob")[1];
                                 ExecuteFFmpeg(commande, stream);
                             }
+                            if (command.Contains("KillFFMPEG"))
+                            {
+                                KillFFmpeg();
+                            }
+                            if (command.Contains("KillMe"))
+                            {
+                                Environment.Exit(0);
+                            }
                         }
 
 
@@ -179,7 +187,27 @@ namespace SlaveWorker
             textBox_Output.Clear();
         }
 
-       
+
+        public static void KillFFmpeg()
+        {
+            try
+            {
+                Process[] processes = Process.GetProcessesByName("ffmpeg");
+                foreach (Process proc in processes)
+                {
+                    //Console.WriteLine($"Killing process: {proc.ProcessName} (ID: {proc.Id})");
+                    proc.Kill();
+                    proc.WaitForExit();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
     }
+
+
 }
+

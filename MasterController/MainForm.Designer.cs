@@ -235,7 +235,7 @@ namespace MasterController
             Panel_Encodage.Dock = System.Windows.Forms.DockStyle.Fill;
             Panel_Encodage.Location = new System.Drawing.Point(200, 0);
             Panel_Encodage.Name = "Panel_Encodage";
-            Panel_Encodage.Size = new System.Drawing.Size(1144, 794);
+            Panel_Encodage.Size = new System.Drawing.Size(1145, 794);
             Panel_Encodage.TabIndex = 1;
             // 
             // borderlessTabControl1
@@ -249,7 +249,7 @@ namespace MasterController
             borderlessTabControl1.Location = new System.Drawing.Point(0, 0);
             borderlessTabControl1.Name = "borderlessTabControl1";
             borderlessTabControl1.SelectedIndex = 0;
-            borderlessTabControl1.Size = new System.Drawing.Size(1144, 794);
+            borderlessTabControl1.Size = new System.Drawing.Size(1145, 794);
             borderlessTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             borderlessTabControl1.TabIndex = 0;
             // 
@@ -262,7 +262,7 @@ namespace MasterController
             tabPage_Encode.Location = new System.Drawing.Point(4, 5);
             tabPage_Encode.Name = "tabPage_Encode";
             tabPage_Encode.Padding = new System.Windows.Forms.Padding(3);
-            tabPage_Encode.Size = new System.Drawing.Size(1136, 785);
+            tabPage_Encode.Size = new System.Drawing.Size(1137, 785);
             tabPage_Encode.TabIndex = 0;
             tabPage_Encode.Text = "tabPage1";
             // 
@@ -284,6 +284,7 @@ namespace MasterController
             // btn_StartAll
             // 
             btn_StartAll.Dock = System.Windows.Forms.DockStyle.Fill;
+            btn_StartAll.Enabled = false;
             btn_StartAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btn_StartAll.ForeColor = System.Drawing.Color.White;
             btn_StartAll.Location = new System.Drawing.Point(925, 3);
@@ -292,6 +293,7 @@ namespace MasterController
             btn_StartAll.TabIndex = 5;
             btn_StartAll.Text = "Tout Lancer";
             btn_StartAll.UseVisualStyleBackColor = true;
+            btn_StartAll.Visible = false;
             btn_StartAll.Click += btn_StartAll_Click;
             // 
             // btn_StopAll
@@ -751,7 +753,7 @@ namespace MasterController
             tabPage_Concat.Location = new System.Drawing.Point(4, 5);
             tabPage_Concat.Name = "tabPage_Concat";
             tabPage_Concat.Padding = new System.Windows.Forms.Padding(3);
-            tabPage_Concat.Size = new System.Drawing.Size(1136, 785);
+            tabPage_Concat.Size = new System.Drawing.Size(1137, 785);
             tabPage_Concat.TabIndex = 1;
             tabPage_Concat.Text = "tabPage2";
             // 
@@ -773,7 +775,7 @@ namespace MasterController
             tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.1941452F));
             tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.8058548F));
             tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            tableLayoutPanel8.Size = new System.Drawing.Size(1130, 779);
+            tableLayoutPanel8.Size = new System.Drawing.Size(1131, 779);
             tableLayoutPanel8.TabIndex = 1;
             // 
             // tableLayoutPanel7
@@ -787,7 +789,7 @@ namespace MasterController
             tableLayoutPanel7.Name = "tableLayoutPanel7";
             tableLayoutPanel7.RowCount = 1;
             tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            tableLayoutPanel7.Size = new System.Drawing.Size(1124, 30);
+            tableLayoutPanel7.Size = new System.Drawing.Size(1125, 30);
             tableLayoutPanel7.TabIndex = 2;
             // 
             // btn_StartConcat
@@ -813,7 +815,7 @@ namespace MasterController
             listBox_ConcatSource.ItemHeight = 15;
             listBox_ConcatSource.Location = new System.Drawing.Point(3, 97);
             listBox_ConcatSource.Name = "listBox_ConcatSource";
-            listBox_ConcatSource.Size = new System.Drawing.Size(1124, 164);
+            listBox_ConcatSource.Size = new System.Drawing.Size(1125, 164);
             listBox_ConcatSource.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -836,7 +838,7 @@ namespace MasterController
             tableLayoutPanel3.RowCount = 2;
             tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
             tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            tableLayoutPanel3.Size = new System.Drawing.Size(1124, 52);
+            tableLayoutPanel3.Size = new System.Drawing.Size(1125, 52);
             tableLayoutPanel3.TabIndex = 0;
             // 
             // textBox_ConcatOutputVideoPath
@@ -848,7 +850,7 @@ namespace MasterController
             textBox_ConcatOutputVideoPath.Location = new System.Drawing.Point(142, 29);
             textBox_ConcatOutputVideoPath.Multiline = true;
             textBox_ConcatOutputVideoPath.Name = "textBox_ConcatOutputVideoPath";
-            textBox_ConcatOutputVideoPath.Size = new System.Drawing.Size(978, 19);
+            textBox_ConcatOutputVideoPath.Size = new System.Drawing.Size(979, 19);
             textBox_ConcatOutputVideoPath.TabIndex = 10;
             // 
             // textBox_ConcatInputVideoPath
@@ -860,7 +862,7 @@ namespace MasterController
             textBox_ConcatInputVideoPath.Location = new System.Drawing.Point(142, 4);
             textBox_ConcatInputVideoPath.Multiline = true;
             textBox_ConcatInputVideoPath.Name = "textBox_ConcatInputVideoPath";
-            textBox_ConcatInputVideoPath.Size = new System.Drawing.Size(978, 18);
+            textBox_ConcatInputVideoPath.Size = new System.Drawing.Size(979, 18);
             textBox_ConcatInputVideoPath.TabIndex = 9;
             // 
             // label7
@@ -930,7 +932,7 @@ namespace MasterController
             tableLayoutPanel9.Name = "tableLayoutPanel9";
             tableLayoutPanel9.RowCount = 1;
             tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableLayoutPanel9.Size = new System.Drawing.Size(1124, 30);
+            tableLayoutPanel9.Size = new System.Drawing.Size(1125, 30);
             tableLayoutPanel9.TabIndex = 4;
             // 
             // bnt_ClearFFmpegConsole
@@ -968,7 +970,7 @@ namespace MasterController
             textBox_FFmpegConcatOutput.Location = new System.Drawing.Point(3, 267);
             textBox_FFmpegConcatOutput.Multiline = true;
             textBox_FFmpegConcatOutput.Name = "textBox_FFmpegConcatOutput";
-            textBox_FFmpegConcatOutput.Size = new System.Drawing.Size(1124, 473);
+            textBox_FFmpegConcatOutput.Size = new System.Drawing.Size(1125, 473);
             textBox_FFmpegConcatOutput.TabIndex = 5;
             // 
             // tabPage_Réglages
@@ -983,7 +985,7 @@ namespace MasterController
             tabPage_Réglages.Location = new System.Drawing.Point(4, 5);
             tabPage_Réglages.Name = "tabPage_Réglages";
             tabPage_Réglages.Padding = new System.Windows.Forms.Padding(3);
-            tabPage_Réglages.Size = new System.Drawing.Size(1136, 785);
+            tabPage_Réglages.Size = new System.Drawing.Size(1137, 785);
             tabPage_Réglages.TabIndex = 2;
             tabPage_Réglages.Text = "tabPage3";
             // 
@@ -1179,7 +1181,7 @@ namespace MasterController
             // MainForm
             // 
             BackColor = System.Drawing.Color.FromArgb(40, 40, 40);
-            ClientSize = new System.Drawing.Size(1344, 794);
+            ClientSize = new System.Drawing.Size(1345, 794);
             Controls.Add(Panel_Encodage);
             Controls.Add(panel1);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
