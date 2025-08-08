@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MasterController")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e224efd01a61b443668d824efa9e3eba9b970bc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+99114abb3d98acaf6b0f879b3ea9d307783d7646")]
 [assembly: System.Reflection.AssemblyProductAttribute("MasterController")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MasterController")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -335,19 +335,21 @@ namespace MasterController
                 settings.SourceImagePath = folderPath;
                 settings.ImageName = fileName;
 
-                var match = Regex.Match(fileName, @"^(.*?)(_|\.)?(\d+)\.(\w+)$");
+                var match = Regex.Match(fileName, @"^(.*?)([_\.])?(\d+)\.(\w+)$");
 
                 if (match.Success)
                 {
                     string baseName = match.Groups[1].Value;
+                    string separator = match.Groups[2].Success ? match.Groups[2].Value : "_"; // par défaut "_"
                     string numberPart = match.Groups[3].Value;
                     string extension = match.Groups[4].Value;
 
                     int digitCount = numberPart.Length;
-                    string ffmpegPattern = $"{baseName}_%0{digitCount}d.{extension}";
+                    string ffmpegPattern = $"{baseName}{separator}%0{digitCount}d.{extension}";
                     settings.ImageName = ffmpegPattern;
                     lbl_imageNameFormatted.Text = ffmpegPattern;
                 }
+
                 else
                 {
                     MessageBox.Show("Le nom de fichier ne correspond pas au format attendu (ex: image_00001.jpg).");
